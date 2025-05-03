@@ -2,39 +2,43 @@
  * Global variables
  */
 
-// Colors
-$color-primary: #4682B4;            // Steel Blue
-$color-primary-light: #6CA0DC;
-$color-primary-dark: #2A4E6C;
+// Colors - Playful, modern, minimalistic theme
+$color-primary: #E5B0A9;           // Soft coral pink
+$color-primary-light: #F9D5D1;
+$color-primary-dark: #C68983;
 
-$color-secondary: #F7A072;          // Peach
-$color-secondary-light: #FFB599;
-$color-secondary-dark: #C97D58;
+$color-secondary: #92D8D8;         // Mint turquoise
+$color-secondary-light: #B5E8E8;
+$color-secondary-dark: #6DAFAF;
 
-$color-tertiary: #7DCE82;           // Soft Green
+$color-tertiary: #FBE480;          // Buttery yellow
 
-// Grayscale
+// Accent colors
+$color-accent-1: #B298DC;          // Lavender
+$color-accent-2: #86C28B;          // Sage green
+
+// Grayscale - Warmer to match the coral primary
 $color-white: #fff;
-$color-gray-100: #f8f9fa;
-$color-gray-200: #e9ecef;
-$color-gray-300: #dee2e6;
-$color-gray-400: #ced4da;
-$color-gray-500: #adb5bd;
-$color-gray-600: #6c757d;
-$color-gray-700: #495057;
-$color-gray-800: #343a40;
-$color-gray-900: #212529;
-$color-black: #000;
+$color-gray-100: #FAF8F8;
+$color-gray-200: #F1EDED;
+$color-gray-300: #E5E1E1;
+$color-gray-400: #D4CFCF;
+$color-gray-500: #BCBABA;
+$color-gray-600: #938F8F;
+$color-gray-700: #6F6C6C;
+$color-gray-800: #4C4A4A;
+$color-gray-900: #292828;
+$color-black: #121111;
 
 // Semantic colors
-$color-success: #28a745;
-$color-info: #17a2b8;
-$color-warning: #ffc107;
-$color-danger: #dc3545;
+$color-success: #86C28B;          // Sage green (matching accent)
+$color-info: #92D8D8;             // Turquoise (matching secondary)
+$color-warning: #FBE480;          // Butter yellow (matching tertiary)
+$color-danger: #F18D8D;           // Soft red
 
 // Typography
-$font-family-primary: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
-$font-family-secondary: 'Georgia', 'Times New Roman', serif;
+$font-family-primary: 'Quicksand', 'Poppins', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif;
+$font-family-secondary: 'Montserrat', 'Nunito', 'Arial', sans-serif;
 $font-family-monospace: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace;
 
 $font-size-base: 1rem;
@@ -42,7 +46,7 @@ $font-size-sm: $font-size-base * 0.875;
 $font-size-lg: $font-size-base * 1.25;
 $font-size-xl: $font-size-base * 1.5;
 $font-size-2xl: $font-size-base * 2;
-$font-size-3xl: $font-size-base * 3;
+$font-size-3xl: $font-size-base * 2.5;
 
 $font-weight-light: 300;
 $font-weight-normal: 400; 
@@ -67,18 +71,19 @@ $space-10: $space-unit * 4;      // 64px
 $space-12: $space-unit * 5;      // 80px
 $space-16: $space-unit * 6;      // 96px
 
-// Borders & Shadows
-$border-radius-sm: 0.125rem;
-$border-radius: 0.25rem;
-$border-radius-lg: 0.5rem;
-$border-radius-xl: 1rem;
+// Borders & Shadows - More playful, softer
+$border-radius-sm: 0.25rem;
+$border-radius: 0.5rem;
+$border-radius-lg: 1rem;
+$border-radius-xl: 1.5rem;
 $border-radius-full: 9999px;
 
-$box-shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
-$box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
-$box-shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
-$box-shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
-$box-shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+// Softer shadows with primary color tint
+$box-shadow-sm: 0 2px 4px 0 rgba($color-primary-dark, 0.08);
+$box-shadow: 0 4px 8px 0 rgba($color-primary-dark, 0.1), 0 2px 4px 0 rgba($color-primary-dark, 0.06);
+$box-shadow-md: 0 6px 12px -1px rgba($color-primary-dark, 0.12), 0 4px 6px -1px rgba($color-primary-dark, 0.05);
+$box-shadow-lg: 0 12px 20px -3px rgba($color-primary-dark, 0.12), 0 8px 12px -6px rgba($color-primary-dark, 0.08);
+$box-shadow-xl: 0 20px 30px -10px rgba($color-primary-dark, 0.14), 0 10px 15px -5px rgba($color-primary-dark, 0.1);
 
 // Z-index
 $z-index-dropdown: 1000;

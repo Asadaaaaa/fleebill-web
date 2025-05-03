@@ -28,6 +28,19 @@
 @function color($key, $fallback: null) {
   $color: null;
   
+  // Define grayscale map
+  $color-gray-map: (
+    'gray-100': $color-gray-100,
+    'gray-200': $color-gray-200,
+    'gray-300': $color-gray-300,
+    'gray-400': $color-gray-400,
+    'gray-500': $color-gray-500,
+    'gray-600': $color-gray-600,
+    'gray-700': $color-gray-700,
+    'gray-800': $color-gray-800,
+    'gray-900': $color-gray-900
+  );
+  
   // Try to get from grayscale
   @if map-has-key($color-gray-map, $key) {
     $color: map-get($color-gray-map, $key);
@@ -46,6 +59,17 @@
 
 // Z-index function to ensure consistency
 @function z($layer) {
+  // Define z-index layers
+  $z-layers: (
+    'dropdown': $z-index-dropdown,
+    'sticky': $z-index-sticky,
+    'fixed': $z-index-fixed,
+    'modal-backdrop': $z-index-modal-backdrop,
+    'modal': $z-index-modal,
+    'popover': $z-index-popover,
+    'tooltip': $z-index-tooltip
+  );
+  
   @if map-has-key($z-layers, $layer) {
     @return map-get($z-layers, $layer);
   }
@@ -57,7 +81,9 @@
 @function spacing($size) {
   @if type-of($size) == 'number' {
     @if unitless($size) {
-      @if $size == 1 {
+      @if $size == 0 {
+        @return 0;
+      } @else if $size == 1 {
         @return $space-1;
       } @else if $size == 2 {
         @return $space-2;

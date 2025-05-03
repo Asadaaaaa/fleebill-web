@@ -58,7 +58,7 @@
 
 // Spacing utilities
 // Margins
-@each $size in (0, 1, 2, 3, 4, 5, 6, 8, 10, 12, 16) {
+@each $size in (1, 2, 3, 4, 5, 6, 8, 10, 12, 16) {
   .m-#{$size} { margin: spacing($size) !important; }
   .mt-#{$size} { margin-top: spacing($size) !important; }
   .mr-#{$size} { margin-right: spacing($size) !important; }
@@ -72,6 +72,21 @@
     margin-top: spacing($size) !important;
     margin-bottom: spacing($size) !important;
   }
+}
+
+// Zero margins
+.m-0 { margin: 0 !important; }
+.mt-0 { margin-top: 0 !important; }
+.mr-0 { margin-right: 0 !important; }
+.mb-0 { margin-bottom: 0 !important; }
+.ml-0 { margin-left: 0 !important; }
+.mx-0 {
+  margin-left: 0 !important;
+  margin-right: 0 !important;
+}
+.my-0 {
+  margin-top: 0 !important;
+  margin-bottom: 0 !important;
 }
 
 // Auto margins
@@ -90,7 +105,7 @@
 }
 
 // Paddings
-@each $size in (0, 1, 2, 3, 4, 5, 6, 8, 10, 12, 16) {
+@each $size in (1, 2, 3, 4, 5, 6, 8, 10, 12, 16) {
   .p-#{$size} { padding: spacing($size) !important; }
   .pt-#{$size} { padding-top: spacing($size) !important; }
   .pr-#{$size} { padding-right: spacing($size) !important; }
@@ -104,6 +119,21 @@
     padding-top: spacing($size) !important;
     padding-bottom: spacing($size) !important;
   }
+}
+
+// Zero paddings
+.p-0 { padding: 0 !important; }
+.pt-0 { padding-top: 0 !important; }
+.pr-0 { padding-right: 0 !important; }
+.pb-0 { padding-bottom: 0 !important; }
+.pl-0 { padding-left: 0 !important; }
+.px-0 {
+  padding-left: 0 !important;
+  padding-right: 0 !important;
+}
+.py-0 {
+  padding-top: 0 !important;
+  padding-bottom: 0 !important;
 }
 
 // Text colors
