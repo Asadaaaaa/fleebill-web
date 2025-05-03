@@ -1,0 +1,92 @@
+/**
+ * Default Theme
+ */
+
+// This file defines theme-specific customizations
+// You can override any variables or add theme-specific styles here
+
+body {
+  font-family: $font-family-primary;
+  font-size: $font-size-base;
+  line-height: $line-height-normal;
+  color: $color-gray-900;
+  background-color: $color-white;
+}
+
+// Theme-specific classes can be added here
+.theme-default {
+  // Header styling
+  .header {
+    background-color: $color-white;
+    box-shadow: $box-shadow;
+  }
+  
+  // Footer styling
+  .footer {
+    background-color: $color-gray-900;
+    color: $color-gray-300;
+  }
+  
+  // Button specific styles
+  .btn {
+    font-weight: $font-weight-medium;
+  }
+  
+  // Links
+  a {
+    color: $color-primary;
+    
+    &:hover {
+      color: $color-primary-dark;
+    }
+  }
+  
+  // Headings 
+  h1, h2, h3, h4, h5, h6 {
+    font-weight: $font-weight-bold;
+    color: $color-gray-900;
+  }
+  
+  // Cards
+  .card {
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    
+    &:hover {
+      transform: translateY(-5px);
+      box-shadow: $box-shadow-md;
+    }
+  }
+  
+  // Form elements
+  .form-control {
+    &:focus {
+      border-color: $color-primary;
+      box-shadow: 0 0 0 0.2rem rgba($color-primary, 0.25);
+    }
+  }
+  
+  // Custom selection color
+  ::selection {
+    background-color: rgba($color-primary, 0.2);
+    color: $color-primary-dark;
+  }
+  
+  // Custom scrollbar (webkit browsers)
+  &::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+  }
+  
+  &::-webkit-scrollbar-track {
+    background: $color-gray-200;
+  }
+  
+  &::-webkit-scrollbar-thumb {
+    background-color: $color-gray-400;
+    border-radius: 4px;
+    
+    &:hover {
+      background-color: $color-gray-500;
+    }
+  }
+} 

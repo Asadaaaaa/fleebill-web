@@ -1,0 +1,97 @@
+/**
+ * Sass Functions
+ */
+
+// Convert px to rem
+@function rem($pixels, $context: 16) {
+  @return ($pixels / $context) * 1rem;
+}
+
+// Convert px to em
+@function em($pixels, $context: 16) {
+  @return ($pixels / $context) * 1em;
+}
+
+// Color functions
+
+// Tint - lighten a color
+@function tint($color, $percentage) {
+  @return mix(white, $color, $percentage);
+}
+
+// Shade - darken a color
+@function shade($color, $percentage) {
+  @return mix(black, $color, $percentage);
+}
+
+// Get color from color map with fallback
+@function color($key, $fallback: null) {
+  $color: null;
+  
+  // Try to get from grayscale
+  @if map-has-key($color-gray-map, $key) {
+    $color: map-get($color-gray-map, $key);
+  }
+  
+  @if $color == null {
+    @if $fallback != null {
+      @return $fallback;
+    } @else {
+      @error "Color '#{$key}' not found in color map.";
+    }
+  }
+  
+  @return $color;
+}
+
+// Z-index function to ensure consistency
+@function z($layer) {
+  @if map-has-key($z-layers, $layer) {
+    @return map-get($z-layers, $layer);
+  }
+  
+  @error "No z-index defined for '#{$layer}'";
+}
+
+// Spacing values
+@function spacing($size) {
+  @if type-of($size) == 'number' {
+    @if unitless($size) {
+      @if $size == 1 {
+        @return $space-1;
+      } @else if $size == 2 {
+        @return $space-2;
+      } @else if $size == 3 {
+        @return $space-3;
+      } @else if $size == 4 {
+        @return $space-4;
+      } @else if $size == 5 {
+        @return $space-5;
+      } @else if $size == 6 {
+        @return $space-6;
+      } @else if $size == 8 {
+        @return $space-8;
+      } @else if $size == 10 {
+        @return $space-10;
+      } @else if $size == 12 {
+        @return $space-12;
+      } @else if $size == 16 {
+        @return $space-16;
+      } @else {
+        @error "Spacing size #{$size} is not defined";
+      }
+    } @else {
+      @return $size;
+    }
+  } @else {
+    @error "Spacing size #{$size} must be a number";
+  }
+}
+
+// Strip unit from value
+@function strip-unit($value) {
+  @if type-of($value) == 'number' and not unitless($value) {
+    @return $value / ($value * 0 + 1);
+  }
+  @return $value;
+} 

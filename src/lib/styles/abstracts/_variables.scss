@@ -1,0 +1,109 @@
+/**
+ * Global variables
+ */
+
+// Colors
+$color-primary: #4682B4;            // Steel Blue
+$color-primary-light: #6CA0DC;
+$color-primary-dark: #2A4E6C;
+
+$color-secondary: #F7A072;          // Peach
+$color-secondary-light: #FFB599;
+$color-secondary-dark: #C97D58;
+
+$color-tertiary: #7DCE82;           // Soft Green
+
+// Grayscale
+$color-white: #fff;
+$color-gray-100: #f8f9fa;
+$color-gray-200: #e9ecef;
+$color-gray-300: #dee2e6;
+$color-gray-400: #ced4da;
+$color-gray-500: #adb5bd;
+$color-gray-600: #6c757d;
+$color-gray-700: #495057;
+$color-gray-800: #343a40;
+$color-gray-900: #212529;
+$color-black: #000;
+
+// Semantic colors
+$color-success: #28a745;
+$color-info: #17a2b8;
+$color-warning: #ffc107;
+$color-danger: #dc3545;
+
+// Typography
+$font-family-primary: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+$font-family-secondary: 'Georgia', 'Times New Roman', serif;
+$font-family-monospace: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace;
+
+$font-size-base: 1rem;
+$font-size-sm: $font-size-base * 0.875;
+$font-size-lg: $font-size-base * 1.25;
+$font-size-xl: $font-size-base * 1.5;
+$font-size-2xl: $font-size-base * 2;
+$font-size-3xl: $font-size-base * 3;
+
+$font-weight-light: 300;
+$font-weight-normal: 400; 
+$font-weight-medium: 500;
+$font-weight-semibold: 600;
+$font-weight-bold: 700;
+
+$line-height-tight: 1.25;
+$line-height-normal: 1.5;
+$line-height-loose: 1.75;
+
+// Spacing
+$space-unit: 1rem;
+$space-1: $space-unit * 0.25;    // 4px
+$space-2: $space-unit * 0.5;     // 8px
+$space-3: $space-unit * 0.75;    // 12px
+$space-4: $space-unit;           // 16px
+$space-5: $space-unit * 1.5;     // 24px
+$space-6: $space-unit * 2;       // 32px
+$space-8: $space-unit * 3;       // 48px
+$space-10: $space-unit * 4;      // 64px
+$space-12: $space-unit * 5;      // 80px
+$space-16: $space-unit * 6;      // 96px
+
+// Borders & Shadows
+$border-radius-sm: 0.125rem;
+$border-radius: 0.25rem;
+$border-radius-lg: 0.5rem;
+$border-radius-xl: 1rem;
+$border-radius-full: 9999px;
+
+$box-shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+$box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+$box-shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+$box-shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+$box-shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+
+// Z-index
+$z-index-dropdown: 1000;
+$z-index-sticky: 1020;
+$z-index-fixed: 1030;
+$z-index-modal-backdrop: 1040;
+$z-index-modal: 1050;
+$z-index-popover: 1060;
+$z-index-tooltip: 1070;
+
+// Breakpoints
+$breakpoint-xs: 0;
+$breakpoint-sm: 576px;
+$breakpoint-md: 768px;
+$breakpoint-lg: 992px;
+$breakpoint-xl: 1200px;
+$breakpoint-2xl: 1400px;
+
+// Grid
+$grid-columns: 12;
+$grid-gutter-width: $space-4;
+$container-max-widths: (
+  sm: 540px,
+  md: 720px,
+  lg: 960px,
+  xl: 1140px,
+  2xl: 1320px
+); 

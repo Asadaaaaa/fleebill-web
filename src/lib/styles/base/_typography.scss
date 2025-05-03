@@ -1,0 +1,172 @@
+/**
+ * Typography
+ */
+
+body {
+  font-family: $font-family-primary;
+  font-size: $font-size-base;
+  font-weight: $font-weight-normal;
+  line-height: $line-height-normal;
+  color: $color-gray-900;
+}
+
+// Headings
+h1, h2, h3, h4, h5, h6 {
+  @extend %heading;
+  margin-bottom: $space-4;
+}
+
+h1 {
+  font-size: $font-size-2xl;
+  line-height: $line-height-tight;
+  
+  @include respond-to(md) {
+    font-size: $font-size-3xl;
+  }
+}
+
+h2 {
+  font-size: $font-size-xl;
+  
+  @include respond-to(md) {
+    font-size: $font-size-2xl;
+  }
+}
+
+h3 {
+  font-size: $font-size-lg;
+  
+  @include respond-to(md) {
+    font-size: $font-size-xl;
+  }
+}
+
+h4 {
+  font-size: $font-size-base;
+  
+  @include respond-to(md) {
+    font-size: $font-size-lg;
+  }
+}
+
+h5 {
+  font-size: $font-size-sm;
+  
+  @include respond-to(md) {
+    font-size: $font-size-base;
+  }
+}
+
+h6 {
+  font-size: $font-size-sm;
+  font-weight: $font-weight-semibold;
+}
+
+// Paragraphs
+p {
+  margin-bottom: $space-4;
+  
+  &:last-child {
+    margin-bottom: 0;
+  }
+}
+
+// Lists
+ul, ol {
+  margin-bottom: $space-4;
+  padding-left: $space-5;
+  
+  li {
+    margin-bottom: $space-2;
+  }
+  
+  ul, ol {
+    margin-top: $space-2;
+    margin-bottom: 0;
+  }
+}
+
+// Bold, Italic, etc.
+b, strong {
+  font-weight: $font-weight-bold;
+}
+
+i, em {
+  font-style: italic;
+}
+
+// Small text
+small, .text-small {
+  font-size: $font-size-sm;
+}
+
+// Links
+a {
+  color: $color-primary;
+  text-decoration: none;
+  @include transition(color);
+  
+  &:hover, &:focus {
+    color: $color-primary-dark;
+    text-decoration: underline;
+  }
+}
+
+// Blockquotes
+blockquote {
+  border-left: 4px solid $color-gray-300;
+  padding-left: $space-4;
+  margin-left: 0;
+  margin-bottom: $space-4;
+  font-style: italic;
+  color: $color-gray-700;
+}
+
+// Code
+code, pre {
+  font-family: $font-family-monospace;
+  font-size: 0.9em;
+  background-color: $color-gray-100;
+  border-radius: $border-radius;
+}
+
+code {
+  padding: $space-1 $space-2;
+}
+
+pre {
+  padding: $space-3;
+  margin-bottom: $space-4;
+  overflow-x: auto;
+  
+  code {
+    padding: 0;
+    background-color: transparent;
+  }
+}
+
+// Horizontal rule
+hr {
+  height: 1px;
+  background-color: $color-gray-300;
+  border: 0;
+  margin: $space-6 0;
+}
+
+// Text alignment
+.text-left { text-align: left; }
+.text-center { text-align: center; }
+.text-right { text-align: right; }
+.text-justify { text-align: justify; }
+
+// Text transforms
+.text-uppercase { text-transform: uppercase; }
+.text-lowercase { text-transform: lowercase; }
+.text-capitalize { text-transform: capitalize; }
+
+// Font weights
+.font-light { font-weight: $font-weight-light; }
+.font-normal { font-weight: $font-weight-normal; }
+.font-medium { font-weight: $font-weight-medium; }
+.font-semibold { font-weight: $font-weight-semibold; }
+.font-bold { font-weight: $font-weight-bold; } 

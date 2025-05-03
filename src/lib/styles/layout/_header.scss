@@ -1,0 +1,116 @@
+/**
+ * Header Component
+ */
+
+.header {
+  position: sticky;
+  top: 0;
+  z-index: $z-index-sticky;
+  background-color: $color-white;
+  box-shadow: $box-shadow;
+  padding: $space-4 0;
+  
+  &__container {
+    @include flex(row, space-between, center);
+  }
+  
+  &__logo {
+    display: block;
+    font-weight: $font-weight-bold;
+    font-size: $font-size-lg;
+    color: $color-primary;
+    text-decoration: none;
+    
+    img {
+      height: 2rem;
+      width: auto;
+    }
+  }
+  
+  &__nav {
+    @include respond-to(md) {
+      display: flex;
+      align-items: center;
+    }
+    
+    @include respond-to(xs) {
+      display: none;
+      
+      &.is-open {
+        display: block;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        right: 0;
+        background-color: $color-white;
+        box-shadow: $box-shadow;
+        padding: $space-4;
+      }
+    }
+  }
+  
+  &__menu {
+    @extend %list-reset;
+    display: flex;
+    align-items: center;
+    
+    @include respond-to(xs) {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+  }
+  
+  &__menu-item {
+    margin: 0 $space-3;
+    
+    @include respond-to(xs) {
+      margin: $space-2 0;
+      width: 100%;
+    }
+    
+    &:first-child {
+      margin-left: 0;
+    }
+    
+    &:last-child {
+      margin-right: 0;
+    }
+  }
+  
+  &__link {
+    color: $color-gray-700;
+    text-decoration: none;
+    font-weight: $font-weight-medium;
+    @include transition(color);
+    
+    &:hover, &:focus {
+      color: $color-primary;
+    }
+    
+    &.is-active {
+      color: $color-primary;
+      font-weight: $font-weight-semibold;
+    }
+  }
+  
+  &__toggle {
+    @extend %button-reset;
+    display: none;
+    
+    @include respond-to(xs) {
+      display: block;
+      font-size: $font-size-lg;
+      color: $color-gray-700;
+    }
+  }
+  
+  &__actions {
+    display: flex;
+    align-items: center;
+    margin-left: $space-4;
+  }
+  
+  &__button {
+    margin-left: $space-2;
+  }
+} 

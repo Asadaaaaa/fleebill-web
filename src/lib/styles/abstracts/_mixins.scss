@@ -1,0 +1,181 @@
+/**
+ * Mixins
+ */
+
+// Media queries
+@mixin respond-to($breakpoint) {
+  @if $breakpoint == xs {
+    @media (max-width: ($breakpoint-sm - 1)) { @content; }
+  } @else if $breakpoint == sm {
+    @media (min-width: $breakpoint-sm) { @content; }
+  } @else if $breakpoint == md {
+    @media (min-width: $breakpoint-md) { @content; }
+  } @else if $breakpoint == lg {
+    @media (min-width: $breakpoint-lg) { @content; }
+  } @else if $breakpoint == xl {
+    @media (min-width: $breakpoint-xl) { @content; }
+  } @else if $breakpoint == 2xl {
+    @media (min-width: $breakpoint-2xl) { @content; }
+  }
+}
+
+// Flexbox utilities
+@mixin flex($direction: row, $justify: flex-start, $align: stretch, $wrap: nowrap) {
+  display: flex;
+  flex-direction: $direction;
+  justify-content: $justify;
+  align-items: $align;
+  flex-wrap: $wrap;
+}
+
+// Grid utilities
+@mixin grid($columns: 1, $gap: $space-4) {
+  display: grid;
+  grid-template-columns: repeat($columns, 1fr);
+  gap: $gap;
+}
+
+// Container
+@mixin container($padding: $space-4) {
+  width: 100%;
+  padding-right: $padding;
+  padding-left: $padding;
+  margin-right: auto;
+  margin-left: auto;
+
+  @include respond-to(sm) {
+    max-width: map-get($container-max-widths, sm);
+  }
+  @include respond-to(md) {
+    max-width: map-get($container-max-widths, md);
+  }
+  @include respond-to(lg) {
+    max-width: map-get($container-max-widths, lg);
+  }
+  @include respond-to(xl) {
+    max-width: map-get($container-max-widths, xl);
+  }
+  @include respond-to(2xl) {
+    max-width: map-get($container-max-widths, 2xl);
+  }
+}
+
+// Typography
+@mixin heading($size, $weight: $font-weight-bold, $line-height: $line-height-tight) {
+  font-family: $font-family-primary;
+  font-weight: $weight;
+  line-height: $line-height;
+  margin-top: 0;
+  
+  @if $size == h1 {
+    font-size: $font-size-3xl;
+    margin-bottom: $space-6;
+  } @else if $size == h2 {
+    font-size: $font-size-2xl;
+    margin-bottom: $space-5;
+  } @else if $size == h3 {
+    font-size: $font-size-xl;
+    margin-bottom: $space-4;
+  } @else if $size == h4 {
+    font-size: $font-size-lg;
+    margin-bottom: $space-3;
+  } @else if $size == h5 {
+    font-size: $font-size-base;
+    margin-bottom: $space-2;
+  } @else if $size == h6 {
+    font-size: $font-size-sm;
+    margin-bottom: $space-2;
+  }
+}
+
+// Transitions
+@mixin transition($property: all, $duration: 0.3s, $timing: ease-in-out) {
+  transition: $property $duration $timing;
+}
+
+// Button
+@mixin button-variant($bg-color, $color: $color-white, $hover-darken: 10%) {
+  background-color: $bg-color;
+  color: $color;
+  
+  &:hover, &:focus {
+    background-color: darken($bg-color, $hover-darken);
+  }
+  
+  &:disabled {
+    background-color: lighten($bg-color, 15%);
+    cursor: not-allowed;
+  }
+}
+
+// Clearfix
+@mixin clearfix {
+  &::after {
+    content: '';
+    display: table;
+    clear: both;
+  }
+}
+
+// Text truncation
+@mixin text-truncate {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+// Hide visually but keep accessible for screen readers
+@mixin visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+// Box shadow
+@mixin box-shadow($shadow: $box-shadow) {
+  box-shadow: $shadow;
+}
+
+// Absolute positioning
+@mixin position($position, $top: null, $right: null, $bottom: null, $left: null) {
+  position: $position;
+  top: $top;
+  right: $right;
+  bottom: $bottom;
+  left: $left;
+}
+
+// Margin and padding utilities
+@mixin spacing($type, $direction, $size) {
+  @if $type == margin {
+    @if $direction == all {
+      margin: $size;
+    } @else if $direction == y {
+      margin-top: $size;
+      margin-bottom: $size;
+    } @else if $direction == x {
+      margin-left: $size;
+      margin-right: $size;
+    } @else {
+      margin-#{$direction}: $size;
+    }
+  } @else if $type == padding {
+    @if $direction == all {
+      padding: $size;
+    } @else if $direction == y {
+      padding-top: $size;
+      padding-bottom: $size;
+    } @else if $direction == x {
+      padding-left: $size;
+      padding-right: $size;
+    } @else {
+      padding-#{$direction}: $size;
+    }
+  }
+} 
