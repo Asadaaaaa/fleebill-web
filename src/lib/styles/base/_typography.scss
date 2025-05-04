@@ -2,6 +2,11 @@
  * Typography
  */
 
+@font-face {
+  font-family: 'Genty';
+  src: url('/fonts/Genty.ttf') format('truetype');
+}
+
 body {
   font-family: $font-family-primary;
   font-size: $font-size-base;
@@ -19,7 +24,7 @@ h1, h2, h3, h4, h5, h6 {
 h1 {
   font-size: $font-size-2xl;
   line-height: $line-height-tight;
-  
+  font-family: 'Genty';
   @include respond-to(md) {
     font-size: $font-size-3xl;
   }

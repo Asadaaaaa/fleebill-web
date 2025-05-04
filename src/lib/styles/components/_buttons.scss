@@ -1,278 +1,38 @@
-/**
- * Buttons - Playful, minimalistic style
- */
-
-// Base button styles
 .btn {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  padding: $space-3 $space-5;
-  font-size: $font-size-base;
-  font-weight: $font-weight-medium;
-  line-height: 1.5;
-  text-align: center;
-  text-decoration: none;
-  vertical-align: middle;
-  cursor: pointer;
-  user-select: none;
-  border: none;
+  padding: $space-4;
   border-radius: $border-radius-lg;
-  transition: transform 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease;
-  
-  &:focus {
-    outline: 0;
-  }
+  font-weight: $font-weight-medium;
+  position: relative;
+  border: none;
+  background-color: $color-primary;
+  color: $color-white;
+  box-shadow: 4px 6px 0 $color-on-primary;
+  transform: translateY(0);
+  transition: transform 0.1s ease, box-shadow 0.1s ease;
+  cursor: pointer;
   
   &:hover {
     transform: translateY(-2px);
-    box-shadow: $box-shadow-md;
+    box-shadow: 4px 8px 0 $color-on-primary;
   }
   
   &:active {
+    transform: translateY(4px);
+    box-shadow: 4px 2px 0 $color-on-primary;
+  }
+  
+  &:focus {
+    outline: none;
+    box-shadow: 4px 6px 0 $color-on-primary, 0 0 0 3px rgba($color-primary, 0.3);
+  }
+  
+  &:disabled {
+    opacity: 0.7;
+    cursor: not-allowed;
     transform: translateY(0);
-  }
-  
-  &:disabled, &.is-disabled {
-    opacity: 0.65;
-    pointer-events: none;
-    transform: none;
-    box-shadow: none;
-  }
-  
-  // Icon support
-  .icon {
-    width: 1.25em;
-    height: 1.25em;
-    margin-right: $space-2;
-    
-    &:only-child {
-      margin-right: 0;
-    }
-  }
-  
-  &--icon-right {
-    .icon {
-      margin-right: 0;
-      margin-left: $space-2;
-    }
+    box-shadow: 4px 4px 0 $color-on-primary;
   }
 }
-
-// Button variants
-.btn--primary {
-  background-color: $color-primary;
-  color: $color-white;
-  box-shadow: $box-shadow-sm;
-  
-  &:hover, &:focus {
-    background-color: darken($color-primary, 5%);
-  }
-  
-  // Special case for hero section on dark backgrounds
-  .hero &, .cta & {
-    background-color: $color-white;
-    color: $color-primary;
-    
-    &:hover, &:focus {
-      background-color: $color-gray-100;
-    }
-  }
-}
-
-.btn--secondary {
-  background-color: $color-secondary;
-  color: $color-white;
-  box-shadow: $box-shadow-sm;
-  
-  &:hover, &:focus {
-    background-color: darken($color-secondary, 5%);
-  }
-}
-
-.btn--tertiary {
-  background-color: $color-tertiary;
-  color: $color-gray-800;
-  box-shadow: $box-shadow-sm;
-  
-  &:hover, &:focus {
-    background-color: darken($color-tertiary, 5%);
-  }
-}
-
-.btn--success {
-  background-color: $color-success;
-  color: $color-white;
-  box-shadow: $box-shadow-sm;
-  
-  &:hover, &:focus {
-    background-color: darken($color-success, 5%);
-  }
-}
-
-.btn--danger {
-  background-color: $color-danger;
-  color: $color-white;
-  box-shadow: $box-shadow-sm;
-  
-  &:hover, &:focus {
-    background-color: darken($color-danger, 5%);
-  }
-}
-
-.btn--warning {
-  background-color: $color-warning;
-  color: $color-gray-800;
-  box-shadow: $box-shadow-sm;
-  
-  &:hover, &:focus {
-    background-color: darken($color-warning, 5%);
-  }
-}
-
-.btn--info {
-  background-color: $color-info;
-  color: $color-white;
-  box-shadow: $box-shadow-sm;
-  
-  &:hover, &:focus {
-    background-color: darken($color-info, 5%);
-  }
-}
-
-// Outline buttons
-.btn--outline-primary {
-  background-color: transparent;
-  color: $color-primary;
-  border: 2px solid $color-primary;
-  
-  &:hover, &:focus {
-    background-color: rgba($color-primary, 0.08);
-  }
-}
-
-.btn--outline-secondary {
-  background-color: transparent;
-  color: $color-secondary;
-  border: 2px solid $color-secondary;
-  
-  &:hover, &:focus {
-    background-color: rgba($color-secondary, 0.08);
-  }
-}
-
-// Simple white outline button for dark backgrounds (landing page)
-.btn--outline {
-  background-color: transparent;
-  border: 2px solid $color-white;
-  color: $color-white;
-  
-  &:hover {
-    background-color: rgba($color-white, 0.1);
-  }
-}
-
-// Button sizes
-.btn--sm {
-  padding: $space-2 $space-4;
-  font-size: $font-size-sm;
-  border-radius: $border-radius;
-}
-
-.btn--lg {
-  padding: $space-4 $space-6;
-  font-size: $font-size-lg;
-  border-radius: $border-radius-xl;
-}
-
-// Block button
-.btn--block {
-  display: flex;
-  width: 100%;
-}
-
-// Text button (no background)
-.btn--text {
-  background-color: transparent;
-  border: none;
-  color: $color-primary;
-  padding: $space-1 $space-2;
-  box-shadow: none;
-  
-  &:hover, &:focus {
-    color: darken($color-primary, 10%);
-    text-decoration: none;
-    background-color: rgba($color-primary, 0.05);
-    transform: none;
-    box-shadow: none;
-  }
-}
-
-// Link button (looks like a link)
-.btn--link {
-  font-weight: $font-weight-normal;
-  color: $color-primary;
-  background-color: transparent;
-  border: none;
-  padding: 0;
-  box-shadow: none;
-  
-  &:hover, &:focus {
-    color: darken($color-primary, 10%);
-    text-decoration: underline;
-    transform: none;
-    box-shadow: none;
-  }
-}
-
-// Rounded button
-.btn--rounded {
-  border-radius: $border-radius-full;
-}
-
-// Icon-only button
-.btn--icon {
-  padding: $space-3;
-  border-radius: $border-radius-full;
-  
-  .icon {
-    margin: 0;
-  }
-  
-  &.btn--sm {
-    padding: $space-2;
-  }
-  
-  &.btn--lg {
-    padding: $space-4;
-  }
-}
-
-// Button group - more playful with rounded edges
-.btn-group {
-  display: inline-flex;
-  border-radius: $border-radius-lg;
-  box-shadow: $box-shadow-sm;
-  overflow: hidden;
-  
-  .btn {
-    border-radius: 0;
-    box-shadow: none;
-    margin: 0;
-    
-    &:hover {
-      transform: none;
-      box-shadow: none;
-    }
-    
-    &:first-child {
-      border-top-left-radius: $border-radius-lg;
-      border-bottom-left-radius: $border-radius-lg;
-    }
-    
-    &:last-child {
-      border-top-right-radius: $border-radius-lg;
-      border-bottom-right-radius: $border-radius-lg;
-    }
-  }
-} 

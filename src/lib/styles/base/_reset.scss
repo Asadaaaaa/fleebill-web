@@ -37,6 +37,7 @@ body {
   font-size: $font-size-base;
   color: $color-gray-900;
   background-color: $color-white;
+  overflow-x: hidden !important;
 }
 
 /* Remove list styles */
