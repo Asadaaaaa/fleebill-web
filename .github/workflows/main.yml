@@ -1,0 +1,27 @@
+name: FleeBill Web | CD | Production
+
+on:
+  push:
+    branches: [ "main" ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: executing remote ssh commands using key
+        uses: appleboy/ssh-action@v0.1.8
+        with:
+          host: ${{ secrets.HOST }}
+          username: ${{ secrets.USERNAME }}
+          key: ${{ secrets.KEY }}
+          port: ${{ secrets.PORT }}
+          script: |
+            export NVM_DIR=~/.nvm
+            source ~/.nvm/nvm.sh
+            cd app/fleebill/website/production
+            git reset --hard HEAD
+            git pull
+            git switch main
+            git pull origin main
+            npm i
+            pm2 restart fleebill-web-prod
