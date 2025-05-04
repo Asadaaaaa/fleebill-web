@@ -1,6 +1,5 @@
 <script>
   import { onMount } from "svelte";
-  import { reveal } from "svelte-reveal";
   import gsap from "gsap";
   import AppButton from "$lib/components/AppButton.svelte";
 
