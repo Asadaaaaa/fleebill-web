@@ -24,4 +24,5 @@ jobs:
             git switch staging
             git pull origin staging
             npm i
+            npm run build
             pm2 restart fleebill-web-stg
