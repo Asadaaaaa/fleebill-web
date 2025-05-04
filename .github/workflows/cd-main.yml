@@ -24,4 +24,5 @@ jobs:
             git switch main
             git pull origin main
             npm i
+            npm run build
             pm2 restart fleebill-web-prod
