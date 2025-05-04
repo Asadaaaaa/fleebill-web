@@ -1,6 +1,8 @@
 /**
  * Default Theme
  */
+@use '../abstracts' as *;
+@use 'sass:color';
 
 // This file defines theme-specific customizations
 // You can override any variables or add theme-specific styles here

@@ -1,6 +1,7 @@
 /**
  * Utility Classes
  */
+@use '../abstracts' as *;
 
 // Display
 .d-none { display: none !important; }

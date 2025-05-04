@@ -1,3 +1,5 @@
+@use '../abstracts' as *;
+
 .landing-page {
     display: flex;
     flex-direction: column;
@@ -40,19 +42,24 @@
 
         .bottom-right {
             position: absolute;
-            bottom: 0px;
-            right: -50px;
+            bottom: -30px;
+            right: -40px;
+            transform: rotate(130deg);
             
             @include respond-to(md) {
-                right: -30px;
-                bottom: -20px;
+            bottom: -30px;
+            right: -40px;
                 transform: scale(1.2);
+            transform: rotate(130deg);
+
             }
             
             @include respond-to(lg) {
-                right: -20px;
-                bottom: -30px;
+            bottom: -30px;
+                right: -40px;
                 transform: scale(1.4);
+                transform: rotate(130deg);
+
             }
         }
 

@@ -1,6 +1,9 @@
 /**
  * Mixins
  */
+@use 'variables' as *;
+@use 'sass:map';
+@use 'sass:color';
 
 // Media queries
 @mixin respond-to($breakpoint) {
@@ -44,19 +47,19 @@
   margin-left: auto;
 
   @include respond-to(sm) {
-    max-width: map-get($container-max-widths, sm);
+    max-width: map.get($container-max-widths, sm);
   }
   @include respond-to(md) {
-    max-width: map-get($container-max-widths, md);
+    max-width: map.get($container-max-widths, md);
   }
   @include respond-to(lg) {
-    max-width: map-get($container-max-widths, lg);
+    max-width: map.get($container-max-widths, lg);
   }
   @include respond-to(xl) {
-    max-width: map-get($container-max-widths, xl);
+    max-width: map.get($container-max-widths, xl);
   }
   @include respond-to(2xl) {
-    max-width: map-get($container-max-widths, 2xl);
+    max-width: map.get($container-max-widths, 2xl);
   }
 }
 
@@ -99,11 +102,11 @@
   color: $color;
   
   &:hover, &:focus {
-    background-color: darken($bg-color, $hover-darken);
+    background-color: color.adjust($bg-color, $lightness: -$hover-darken);
   }
   
   &:disabled {
-    background-color: lighten($bg-color, 15%);
+    background-color: color.adjust($bg-color, $lightness: 15%);
     cursor: not-allowed;
   }
 }
