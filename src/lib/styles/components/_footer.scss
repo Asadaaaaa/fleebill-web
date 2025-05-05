@@ -1,0 +1,131 @@
+@use '../abstracts' as *;
+
+.footer {
+  background-color: $color-gray-900;
+  color: $color-gray-300;
+  padding: $space-8 $space-4;
+  position: relative;
+  overflow: hidden;
+  
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: linear-gradient(to right, $color-primary, $color-secondary, $color-accent-1);
+  }
+}
+
+.footer-container {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.footer-content {
+  display: flex;
+  flex-direction: column;
+  gap: $space-8;
+  margin-bottom: $space-8;
+  
+  @media (min-width: $breakpoint-md) {
+    flex-direction: row;
+    justify-content: space-between;
+  }
+}
+
+.footer-brand {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  
+    >h1 {
+        color: $color-white;
+    }
+  
+  .footer-tagline {
+    font-size: $font-size-sm;
+    font-weight: $font-weight-medium;
+    margin-top: $space-2;
+    color: $color-gray-400;
+
+    .flee {
+      color: $color-primary;
+      font-weight: $font-weight-bold;
+    }
+    
+    .accent {
+      color: $color-accent-1;
+      font-weight: $font-weight-bold;
+    }
+  }
+}
+
+.footer-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: $space-6;
+  
+  .link-group {
+    min-width: 120px;
+    
+    h4 {
+      color: $color-white;
+      font-size: $font-size-sm;
+      font-weight: $font-weight-semibold;
+      margin-bottom: $space-3;
+    }
+    
+    a {
+      display: block;
+      color: $color-gray-400;
+      font-size: $font-size-sm;
+      margin-bottom: $space-2;
+      text-decoration: none;
+      transition: color 0.2s ease;
+      
+      &:hover {
+        color: $color-primary;
+      }
+    }
+  }
+}
+
+.footer-bottom {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-top: $space-6;
+  border-top: 1px solid rgba($color-gray-600, 0.3);
+  
+  @media (min-width: $breakpoint-md) {
+    flex-direction: row;
+    justify-content: space-between;
+  }
+  
+  .copyright {
+    font-size: $font-size-sm;
+    color: $color-gray-500;
+    margin-bottom: $space-4;
+    
+    @media (min-width: $breakpoint-md) {
+      margin-bottom: 0;
+    }
+  }
+  
+  .social-links {
+    display: flex;
+    gap: $space-4;
+    
+    a {
+      color: $color-gray-400;
+      transition: color 0.2s ease, transform 0.2s ease;
+      
+      &:hover {
+        color: $color-primary;
+        transform: translateY(-2px);
+      }
+    }
+  }
+} 

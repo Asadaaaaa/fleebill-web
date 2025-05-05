@@ -2,6 +2,8 @@
   // Global styles import
   import '../app.scss';
   import { app } from '$lib/shared.svelte';
+  import Footer from '$lib/components/Footer.svelte';
+  
   let { children } = $props()
 
   let innerWidth = $state();
@@ -17,4 +19,8 @@
 
 <svelte:window bind:innerWidth />
 
-{@render children()}
+<main>
+  {@render children()}
+</main>
+
+<Footer />
