@@ -1,6 +1,6 @@
 <script>
   import { onMount } from "svelte";
-  import gsap from "gsap";
+  import { gsap } from "gsap";
   import AppButton from "$lib/components/AppButton.svelte";
 
   let topLeft = $state(null);
