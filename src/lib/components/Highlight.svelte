@@ -1,6 +1,26 @@
 <script>
     import Spacer from '$lib/components/Spacer.svelte';
     import HighlightCard from '$lib/components/HighlightCard.svelte';
+    import { onMount } from 'svelte';
+
+    import { gsap } from 'gsap';
+    import { ScrollTrigger } from 'gsap/ScrollTrigger';
+
+    gsap.registerPlugin(ScrollTrigger);
+
+    let title = $state(null);
+
+    onMount(() => {
+        gsap.from(title, {
+            opacity: 0,
+            duration: 1,
+            ease: 'power2.inOut',
+            scrollTrigger: {
+                trigger: title,
+                start: 'top 80%',
+            }
+        });
+    });
 
 
     const highlights = [
@@ -27,8 +47,8 @@
 
 <div class="landing-highlight">
     <Spacer />
-    <h1 class="text-center">Highlight<br>Hoopla</h1>
-    {#each highlights as highlight}
-        <HighlightCard color={highlight.color} image={highlight.image} title={highlight.title} description={highlight.description} />
+    <h1 class="text-center" bind:this={title}>Highlight<br>Hoopla</h1>
+    {#each highlights as highlight, index}
+        <HighlightCard color={highlight.color} image={highlight.image} title={highlight.title} description={highlight.description} {index} />
     {/each}
 </div>
