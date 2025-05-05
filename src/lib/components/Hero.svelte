@@ -67,7 +67,7 @@
   });
 </script>
 
-<div class="landing-page">
+<div class="landing-hero">
   <div class="stickers">
     <div class="top-left" bind:this={topLeft}>
       <img src="/svg/top-left.svg" alt="" />

@@ -1,6 +1,6 @@
 @use '../abstracts' as *;
 
-.landing-page {
+.landing-hero {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -121,4 +121,14 @@
         }
         
     }
+}
+
+.landing-highlight {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: start;
+    min-height: 100svh;
+    padding: $space-5;
+    gap: $space-5;
 }
