@@ -13,6 +13,8 @@
   let texts = $state(null);
   let sticker = $state(null);
 
+  const start = 'top 90%';
+
   const mobileAnimation = () => {
     gsap.from(card, {
       xPercent: index % 2 === 0 ? 110 : -110,
@@ -33,7 +35,7 @@
       ease: "power2.inOut",
       scrollTrigger: {
         trigger: card,
-        start: "top 80%",
+        start: start,
       },
     });
 
@@ -44,7 +46,7 @@
       ease: "power2.inOut",
       scrollTrigger: {
         trigger: card,
-        start: "top 80%",
+        start: start,
       },
     });
   };
