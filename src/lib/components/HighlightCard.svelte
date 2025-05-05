@@ -2,7 +2,7 @@
   import Spacer from "$lib/components/Spacer.svelte";
   import { gsap } from "gsap";
   import { onMount } from "svelte";
-  import { ScrollTrigger } from "gsap/ScrollTrigger";
+  import { ScrollTrigger } from 'gsap/dist/ScrollTrigger.js'
   import { app } from "$lib/shared.svelte";
 
   gsap.registerPlugin(ScrollTrigger);
