@@ -1,27 +1,32 @@
 /**
  * Sass Functions
  */
+@use 'sass:math';
+@use 'sass:meta';
+@use 'sass:map';
+@use 'sass:color';
+@use 'variables' as *;
 
 // Convert px to rem
 @function rem($pixels, $context: 16) {
-  @return ($pixels / $context) * 1rem;
+  @return math.div($pixels, $context) * 1rem;
 }
 
 // Convert px to em
 @function em($pixels, $context: 16) {
-  @return ($pixels / $context) * 1em;
+  @return math.div($pixels, $context) * 1em;
 }
 
 // Color functions
 
 // Tint - lighten a color
 @function tint($color, $percentage) {
-  @return mix(white, $color, $percentage);
+  @return color.mix(white, $color, $percentage);
 }
 
 // Shade - darken a color
 @function shade($color, $percentage) {
-  @return mix(black, $color, $percentage);
+  @return color.mix(black, $color, $percentage);
 }
 
 // Get color from color map with fallback
@@ -42,8 +47,8 @@
   );
   
   // Try to get from grayscale
-  @if map-has-key($color-gray-map, $key) {
-    $color: map-get($color-gray-map, $key);
+  @if map.has-key($color-gray-map, $key) {
+    $color: map.get($color-gray-map, $key);
   }
   
   @if $color == null {
@@ -70,8 +75,8 @@
     'tooltip': $z-index-tooltip
   );
   
-  @if map-has-key($z-layers, $layer) {
-    @return map-get($z-layers, $layer);
+  @if map.has-key($z-layers, $layer) {
+    @return map.get($z-layers, $layer);
   }
   
   @error "No z-index defined for '#{$layer}'";
@@ -79,8 +84,8 @@
 
 // Spacing values
 @function spacing($size) {
-  @if type-of($size) == 'number' {
-    @if unitless($size) {
+  @if meta.type-of($size) == 'number' {
+    @if math.is-unitless($size) {
       @if $size == 0 {
         @return 0;
       } @else if $size == 1 {
@@ -116,8 +121,8 @@
 
 // Strip unit from value
 @function strip-unit($value) {
-  @if type-of($value) == 'number' and not unitless($value) {
-    @return $value / ($value * 0 + 1);
+  @if meta.type-of($value) == 'number' and not math.is-unitless($value) {
+    @return math.div($value, ($value * 0 + 1));
   }
   @return $value;
 } 

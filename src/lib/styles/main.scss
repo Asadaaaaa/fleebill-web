@@ -4,33 +4,23 @@
  */
 
 // 1. Abstracts (variables, functions, mixins)
-@import 'abstracts/variables';
-@import 'abstracts/functions';
-@import 'abstracts/mixins';
-@import 'abstracts/placeholders';
+@use 'abstracts';
 
 // 2. Vendors (third-party styles)
-// @import 'vendors/...'
+// @use 'vendors';
 
 // 3. Base styles
-@import 'base/reset';
-@import 'base/typography';
-@import 'base/utilities';
+@use 'base';
 
 // 4. Layout components
-@import 'layout/grid';
-@import 'layout/header';
-@import 'layout/footer';
-@import 'layout/navigation';
 
 // 5. Components
-@import 'components/buttons';
-@import 'components/forms';
-@import 'components/cards';
+@use 'components';
+@use 'components/highlight-card';
 
 // 6. Page-specific styles
-@import 'pages/landing';
+@use 'pages';
 
 // 7. Themes
-@import 'themes/default';
-// @import 'themes/dark'; 
+@use 'themes';
+// @use 'themes/dark'; 

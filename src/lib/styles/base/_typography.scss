@@ -1,6 +1,7 @@
 /**
  * Typography
  */
+@use '../abstracts' as *;
 
 @font-face {
   font-family: 'Genty';
@@ -12,13 +13,7 @@ body {
   font-size: $font-size-base;
   font-weight: $font-weight-normal;
   line-height: $line-height-normal;
-  color: $color-gray-900;
-}
-
-// Headings
-h1, h2, h3, h4, h5, h6 {
-  @extend %heading;
-  margin-bottom: $space-4;
+  color: $color-on-primary;
 }
 
 h1 {
@@ -69,8 +64,6 @@ h6 {
 
 // Paragraphs
 p {
-  margin-bottom: $space-4;
-  
   &:last-child {
     margin-bottom: 0;
   }
