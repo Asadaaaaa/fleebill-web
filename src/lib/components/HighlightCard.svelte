@@ -2,7 +2,7 @@
   import Spacer from "$lib/components/Spacer.svelte";
   import { gsap } from "gsap";
   import { onMount } from "svelte";
-  import { ScrollTrigger } from 'gsap/dist/ScrollTrigger.js'
+  import { ScrollTrigger } from "gsap/dist/ScrollTrigger.js";
   import { app } from "$lib/shared.svelte";
 
   gsap.registerPlugin(ScrollTrigger);
@@ -13,7 +13,7 @@
   let texts = $state(null);
   let sticker = $state(null);
 
-  const start = 'top 90%';
+  const start = "top 90%";
 
   const mobileAnimation = () => {
     gsap.from(card, {
@@ -25,6 +25,24 @@
         trigger: card,
         start: "top 80%",
       },
+    });
+  };
+
+  const handleStickerMouseEnter = () => {
+    if(app.isMobile) return
+    gsap.to(sticker, {
+      duration: 0.1,
+      scale: 1.05,
+      rotation: -10,
+    });
+  };
+
+  const handleStickerMouseLeave = () => {
+    if (app.isMobile) return;
+    gsap.to(sticker, {
+      duration: 0.1,
+      scale: 1,
+      rotation: 0,
     });
   };
 
@@ -40,7 +58,7 @@
     });
 
     gsap.from(sticker, {
-      duration: .5,
+      duration: 0.5,
       yPercent: 50,
       xPercent: 50,
       ease: "power2.inOut",
@@ -64,6 +82,9 @@
   class="highlight-card"
   style={`background-color: var(${color[0]})`}
   bind:this={card}
+  onmouseenter={handleStickerMouseEnter}
+  onmouseleave={handleStickerMouseLeave}
+  role="presentation"
 >
   <div class="text-content" bind:this={texts}>
     <h1 style={`color: var(${color[1]})`}>{title}</h1>

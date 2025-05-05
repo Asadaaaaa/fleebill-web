@@ -22,10 +22,6 @@
 
         &:hover {
             transform: translateY(-5px);
-
-            > img {
-                transform: scale(1.05) rotate(-10deg);
-            }
         }
 
         > img {
