@@ -8,6 +8,11 @@
   src: url('/fonts/Genty.ttf') format('truetype');
 }
 
+@font-face {
+  font-family: 'Urbanist';
+  src: url('/fonts/Urbanist.ttf') format('truetype');
+}
+
 body {
   font-family: $font-family-primary;
   font-size: $font-size-base;
@@ -27,7 +32,7 @@ h1 {
 
 h2 {
   font-size: $font-size-xl;
-  
+  font-family: 'Urbanist';
   @include respond-to(md) {
     font-size: $font-size-2xl;
   }

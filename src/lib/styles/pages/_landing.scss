@@ -131,4 +131,50 @@
     min-height: 100svh;
     padding: $space-5;
     gap: $space-5;
+
+    >h2 {
+        font-style: italic;
+    }
+}
+
+.landing-workflow {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: end;
+    gap: $space-4;
+    width: 100vw;
+    
+    >h2 {
+        font-style: italic;
+    }
+
+    .phone-placeholder {
+        display: flex;
+        align-items: end;
+        justify-content: center;
+        width: 350px;
+        height: 400px;
+
+        .phone {
+            position: absolute;
+            z-index: 0;
+            width: 350px;
+            height: 400px;
+        }
+        
+        .phone-content {
+            width: calc(350px - 20px);
+            height: 385px;
+            border-top-left-radius: 60px;
+            border-top-right-radius: 60px;
+            overflow: hidden;
+            background-color: $color-accent-1;
+            display: flex;
+            padding: 0 $space-2;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+    }
 }

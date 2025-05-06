@@ -49,7 +49,7 @@
 
 <div class="landing-highlight">
   <Spacer />
-  <h1 class="text-center" bind:this={title}>Highlight<br />Hoopla</h1>
+  <h2 class="text-center" bind:this={title}>Highlight Hoopla</h2>
   {#each highlights as highlight, index}
     <HighlightCard
       color={highlight.color}
