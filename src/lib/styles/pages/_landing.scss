@@ -131,10 +131,6 @@
     min-height: 100svh;
     padding: $space-5;
     gap: $space-5;
-
-    >h2 {
-        font-style: italic;
-    }
 }
 
 .landing-workflow {
@@ -144,12 +140,16 @@
     justify-content: end;
     gap: $space-4;
     width: 100vw;
-    
-    >h2 {
-        font-style: italic;
-    }
+    height: fit-content;
+    position: relative;
 
-    .phone-placeholder {
+    .phone-wrapper {
+
+        display: flex;
+        gap: $space-4;
+        align-items: center;
+
+        .phone-placeholder {
         display: flex;
         align-items: end;
         justify-content: center;
@@ -176,5 +176,6 @@
             align-items: center;
             justify-content: center;
         }
+    }
     }
 }

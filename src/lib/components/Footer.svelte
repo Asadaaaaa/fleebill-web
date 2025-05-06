@@ -1,20 +1,4 @@
-<script>
-  import { onMount } from "svelte";
-  import { gsap } from "gsap";
-
-  let footerElement;
-
-  onMount(() => {
-    // Simple fade-in animation
-    gsap.from(footerElement, {
-      duration: 1.5,
-      y: 20,
-      ease: "expo.out",
-    });
-  });
-</script>
-
-<footer bind:this={footerElement} class="footer">
+<footer class="footer">
   <div class="footer-container">
     <div class="footer-content">
       <div class="footer-brand">
