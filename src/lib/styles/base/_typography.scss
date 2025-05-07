@@ -13,6 +13,11 @@
   src: url('/fonts/Urbanist.ttf') format('truetype');
 }
 
+@font-face {
+  font-family: 'Rebond';
+  src: url('/fonts/Rebond.ttf') format('truetype');
+}
+
 body {
   font-family: $font-family-primary;
   font-size: $font-size-base;
@@ -34,7 +39,7 @@ h1 {
 h2 {
   font-size: $font-size-xl;
   color: $color-on-primary;
-  font-family: 'Urbanist';
+  font-family: 'Rebond';
   @include respond-to(md) {
     font-size: $font-size-2xl;
   }
@@ -72,6 +77,7 @@ h6 {
 
 // Paragraphs
 p {
+  font-family: 'Urbanist';
   &:last-child {
     margin-bottom: 0;
   }

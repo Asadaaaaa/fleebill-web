@@ -212,7 +212,7 @@
 
 <div class="landing-workflow">
   <Spacer />
-  <h2>Workflow</h2>
+  <img src="/svg/subtitle-2.svg" alt="subtitle-2" class="subtitle-2">
   <div class="phone-wrapper">
     <AppButton classes="phone-navigation back-button" onclick={handleBack}>
       <img src="/svg/back-button.svg" alt="Back" />

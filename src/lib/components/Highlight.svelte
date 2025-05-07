@@ -49,7 +49,7 @@
 
 <div class="landing-highlight">
   <Spacer />
-  <h2 class="text-center" bind:this={title}>Highlight Hoopla</h2>
+  <img src="/svg/subtitle-1.svg" alt="subtitle-1" class="subtitle-1">
   {#each highlights as highlight, index}
     <HighlightCard
       color={highlight.color}
