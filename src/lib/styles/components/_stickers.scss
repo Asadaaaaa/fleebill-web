@@ -99,4 +99,181 @@
         }
       }
     }
+
+    .sticker-sf-2 {
+      position: absolute;
+      width: var(--sticker-size, 150px);
+      height: var(--sticker-size, 150px);
+      transform: rotate(calc(var(--random-rotation, 0) * 1deg));
+      transition: transform 0.5s ease-in-out;
+      
+      &:hover {
+        transform: rotate(calc((var(--random-rotation, 0) + 10) * 1deg)) scale(1.05);
+      }
+
+      &.sticker-0 {
+        top: 13%;
+        left: 7%;
+        --random-rotation: #{random() * 45 - 22};
+
+        @media (min-width: 1024px) {
+          top: 10%;
+          left: 14%;
+        }
+      }
+
+      &.sticker-1 {
+        bottom: -50px;
+        left: 5%;
+        --random-rotation: #{random() * 55 - 27};
+
+        @media (min-width: 1024px) {
+          bottom: 0%;
+          left: 10%;
+        }
+      }
+
+      &.sticker-2 {
+        bottom: 25%;
+        left: 20%;
+        --random-rotation: #{random() * 40 - 20};
+
+        @media (min-width: 1024px) {
+          bottom: 31%;
+          left: -50px;
+        }
+      }
+
+      &.sticker-3 {
+        bottom: 1%;
+        right: 15%;
+        --random-rotation: #{random() * 50 - 25};
+
+        @media (min-width: 1024px) {
+          bottom: 10%;
+          right: 20%;
+        }
+      }
+
+      &.sticker-4 {
+        top: 23%;
+        right: 20%;
+        --random-rotation: #{random() * 35 - 17};
+
+        @media (min-width: 1024px) {
+          top: 15%;
+          right: 25%;
+        }
+      }
+
+      &.sticker-5 {
+        top: 9%;
+        right: -100px;
+        --random-rotation: #{random() * 60 - 30};
+
+        @media (min-width: 1024px) {
+          top: 17%;
+          right: -50px;
+        }
+      }
+
+      &.sticker-6 {
+        bottom: 10%;
+        right: -100%;
+        --random-rotation: #{random() * 42 - 21};
+
+        @media (min-width: 1024px) {
+          bottom: 35%;
+          left: 25%;
+        }
+      }
+    }
+    .sticker-sf {
+      position: absolute;
+      width: var(--sticker-size, 150px);
+      height: var(--sticker-size, 150px);
+      transform: rotate(calc(var(--random-rotation, 0) * 1deg));
+      transition: transform 0.5s ease-in-out;
+      
+      &:hover {
+        transform: rotate(calc((var(--random-rotation, 0) + 10) * 1deg)) scale(1.05);
+      }
+
+      &.sticker-0 {
+        top: 13%;
+        left: 7%;
+        --random-rotation: #{random() * 45 - 22};
+
+        @media (min-width: 1024px) {
+          top: 10%;
+          left: 14%;
+        }
+      }
+
+      &.sticker-1 {
+        bottom: -50px;
+        left: 5%;
+        --random-rotation: #{random() * 55 - 27};
+
+        @media (min-width: 1024px) {
+          bottom: 0%;
+          left: 10%;
+        }
+      }
+
+      &.sticker-2 {
+        bottom: 25%;
+        left: 20%;
+        --random-rotation: #{random() * 40 - 20};
+
+        @media (min-width: 1024px) {
+          bottom: 31%;
+          left: -50px;
+        }
+      }
+
+      &.sticker-3 {
+        bottom: 1%;
+        right: 15%;
+        --random-rotation: #{random() * 50 - 25};
+
+        @media (min-width: 1024px) {
+          bottom: 10%;
+          right: 20%;
+        }
+      }
+
+      &.sticker-4 {
+        top: 23%;
+        right: 20%;
+        --random-rotation: #{random() * 35 - 17};
+
+        @media (min-width: 1024px) {
+          top: 15%;
+          right: 25%;
+        }
+      }
+
+      &.sticker-5 {
+        top: 9%;
+        right: -100px;
+        --random-rotation: #{random() * 60 - 30};
+
+        @media (min-width: 1024px) {
+          top: 17%;
+          right: -50px;
+        }
+      }
+
+      &.sticker-6 {
+        bottom: 10%;
+        right: -100%;
+        --random-rotation: #{random() * 42 - 21};
+
+        @media (min-width: 1024px) {
+          bottom: 35%;
+          left: 25%;
+        }
+      }
+    }
   }
