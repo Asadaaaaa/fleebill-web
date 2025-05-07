@@ -4,9 +4,6 @@
   import { onMount } from "svelte";
   import { app } from "$lib/shared.svelte";
   import Icon from "$lib/components/Icon.svelte";
-  import { ScrollTrigger } from "gsap/ScrollTrigger";
-
-  gsap.registerPlugin(ScrollTrigger);
 
   let { title, description, color, icon, index } = $props();
 
@@ -70,7 +67,10 @@
     });
   };
 
-  onMount(() => {
+  onMount(async () => {
+    let scrollTrigger = await import("gsap/dist/ScrollTrigger.js");
+    gsap.registerPlugin(scrollTrigger);
+
     if (app.isMobile) {
       mobileAnimation();
     } else {

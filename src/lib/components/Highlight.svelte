@@ -4,14 +4,14 @@
   import { onMount } from "svelte";
   import { app } from "$lib/shared.svelte";
   import { gsap } from "gsap";
-  import { ScrollTrigger } from "gsap/ScrollTrigger";
   import Icon from "$lib/components/Icon.svelte";
-
-  gsap.registerPlugin(ScrollTrigger);
 
   let title = $state(null);
 
-  onMount(() => {
+  onMount(async () => {
+    let scrollTrigger = await import("gsap/dist/ScrollTrigger.js");
+    gsap.registerPlugin(scrollTrigger);
+
     gsap.from(title, {
       opacity: 0,
       duration: 1,
