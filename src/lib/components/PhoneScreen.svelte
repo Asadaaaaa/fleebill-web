@@ -2,19 +2,34 @@
   import { gsap } from "gsap";
   import { onMount } from "svelte";
   import ScreenOne from "./ScreenOne.svelte";
+  import { browser } from '$app/environment';
 
   let receiptElement;
   let cameraScreenElement;
   let loadingScreenElement;
   let timeline1;
   let timeline2;
-  onMount(() => {
+  let lottieContainer;
+
+  onMount(async () => {
     gsap.set(loadingScreenElement, {
         opacity: 0,
     });
 
     timeline1 = gsap.timeline({ paused: true,});
     timeline2 = gsap.timeline({ paused: true});
+
+    // Initialize Lottie animation only on the client side
+    if (browser) {
+      const lottie = await import('lottie-web');
+      const animation = lottie.default.loadAnimation({
+        container: lottieContainer,
+        renderer: 'svg',
+        loop: true,
+        autoplay: true,
+        path: '/lottie/lottie.json'
+      });
+    }
   });
 
   export const playTimeline1 = () => {
@@ -50,7 +65,7 @@
 <div class="phone-screen">
     <ScreenOne bind:cameraScreenElement bind:receiptElement/>
      <div class="loading-screen" bind:this={loadingScreenElement}>
-        <img src="/images/lottie.gif" alt="Loading Screen" />
+        <div class="lottie-container" bind:this={lottieContainer}></div>
         <h2>Crunching your bill with AI magic...</h2>
      </div>
 </div>
