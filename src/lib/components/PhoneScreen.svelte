@@ -3,7 +3,7 @@
   import { onMount } from "svelte";
   import ScreenOne from "./ScreenOne.svelte";
   import { browser } from '$app/environment';
-
+  import ScreenTwo from "./ScreenTwo.svelte";
   let receiptElement;
   let cameraScreenElement;
   let loadingScreenElement;
@@ -64,10 +64,7 @@
 
 <div class="phone-screen">
     <ScreenOne bind:cameraScreenElement bind:receiptElement/>
-     <div class="loading-screen" bind:this={loadingScreenElement}>
-        <div class="lottie-container" bind:this={lottieContainer}></div>
-        <h2>Crunching your bill with AI magic...</h2>
-     </div>
+    <ScreenTwo bind:loadingScreenElement bind:lottieContainer/>
 </div>
 
 

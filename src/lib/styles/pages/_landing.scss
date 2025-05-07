@@ -184,6 +184,8 @@
     width: 100vw;
     height: fit-content;
     position: relative;
+    touch-action: pan-y pinch-zoom;
+    position: relative;
 
     .phone-wrapper {
 
@@ -228,4 +230,40 @@
         }
     }
     }
+
+    .dot-indicator {
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+    margin-top: 24px;
+    position: absolute;
+    bottom: 20px;
+    left: 0;
+    right: 0;
+    z-index: 100;
+  }
+
+  .dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background-color: $color-on-primary;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+    transition: all 0.3s ease;
+  }
+
+  .dot.active {
+    background-color: $color-primary;
+    transform: scale(1.2);
+  }
+
+  .dot:hover {
+    background-color: $color-on-primary;
+  }
+
+  .dot.active:hover {
+    background-color: $color-primary;
+  }
 }

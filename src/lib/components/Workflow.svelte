@@ -108,6 +108,9 @@
   ];
 
   let innerWidth = $state(0);
+  let touchStartX = $state(0);
+  let touchEndX = $state(0);
+  let isSwiping = $state(false);
 
   let stickersRef = $state([]);
   let stickers2Ref = $state([]);
@@ -166,43 +169,77 @@
   });
 
   const handleNext = () => {
-    if (app.isMobile) {
-      return;
-    }
-
     if (activeIndex == 2) {
       return;
     } else if (activeIndex == 0) {
       phoneScreenRef.playTimeline1();
-      timeline1.play();
+      if (!app.isMobile) timeline1.play();
     } else if (activeIndex == 1) {
-      timeline2.play();
+      if (!app.isMobile) timeline2.play();
     }
 
     activeIndex++;
   };
 
   const handleBack = () => {
-    if (app.isMobile) {
-      return;
-    }
-
     if (activeIndex == 0) {
       return;
     } else if (activeIndex == 1) {
       phoneScreenRef.reverseTimeline1();
-      timeline1.reverse();
+      if (!app.isMobile) timeline1.reverse();
     } else if (activeIndex == 2) {
-      timeline2.reverse();
+      if (!app.isMobile) timeline2.reverse();
     }
 
     activeIndex--;
+  };
+
+  const handleTouchStart = (e) => {
+    touchStartX = e.touches[0].clientX;
+    isSwiping = true;
+  };
+
+  const handleTouchMove = (e) => {
+    if (!isSwiping) return;
+    touchEndX = e.touches[0].clientX;
+  };
+
+  const handleTouchEnd = () => {
+    if (!isSwiping) return;
+    
+    const swipeDistance = touchEndX - touchStartX;
+    const minSwipeDistance = 50; // Minimum distance required for a swipe
+
+    if (Math.abs(swipeDistance) > minSwipeDistance) {
+      if (swipeDistance > 0) {
+        // Swipe right - go back
+        handleBack();
+      } else {
+        // Swipe left - go next
+        handleNext();
+      }
+    }
+
+    isSwiping = false;
+  };
+
+  const handleDotClick = (index) => {
+    if (index < activeIndex) {
+      handleBack();
+    } else if (index > activeIndex) {
+      handleNext();
+    }
   };
 </script>
 
 <svelte:window bind:innerWidth />
 
-<div class="landing-workflow">
+<div 
+  class="landing-workflow"
+  ontouchstart={handleTouchStart}
+  ontouchmove={handleTouchMove}
+  ontouchend={handleTouchEnd}
+>
   <Spacer />
   <Icon name="Subtitle-2" />
   <div class="phone-wrapper">
@@ -217,4 +254,16 @@
     </AppButton>
   </div>
   <Stickers {stickers} {stickers2} {stickers3} />
+  
+  <div class="dot-indicator">
+    {#each Array(3) as _, i}
+      <button 
+        class="dot" 
+        class:active={i === activeIndex}
+        onclick={() => handleDotClick(i)}
+        aria-label={`Go to screen ${i + 1}`}
+      >
+      </button>
+    {/each}
+  </div>
 </div>
