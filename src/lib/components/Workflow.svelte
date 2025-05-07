@@ -115,6 +115,8 @@
   let activeIndex = $state(0);
 
   let phoneScreenRef = $state(null);
+  let timeline1;
+  let timeline2;
 
   onMount(() => {
     if (!app.isMobile) {
@@ -130,6 +132,36 @@
         x: innerWidth * 1.2,
         immediateRender: true,
       });
+
+      // Initialize timelines
+      timeline1 = gsap.timeline({ paused: true });
+      timeline2 = gsap.timeline({ paused: true });
+
+      // Setup timeline1 (first transition)
+      timeline1.to(stickersRef, {
+        duration: 0.5,
+        stagger: 0.05,
+        x: -(innerWidth * 1.2),
+        ease: "back.in(10)",
+      }).to(stickers2Ref, {
+        duration: 0.5,
+        stagger: 0.05,
+        x: 0,
+        ease: "back.out(10)",
+      });
+
+      // Setup timeline2 (second transition)
+      timeline2.to(stickers2Ref, {
+        duration: 0.5,
+        stagger: 0.05,
+        x: -(innerWidth * 1.2),
+        ease: "back.in(10)",
+      }).to(stickers3Ref, {
+        duration: 0.5,
+        stagger: 0.05,
+        x: 0,
+        ease: "back.out(10)",
+      });
     }
   });
 
@@ -142,34 +174,9 @@
       return;
     } else if (activeIndex == 0) {
       phoneScreenRef.playTimeline1();
-
-      gsap.to(stickersRef, {
-        duration: 0.5,
-        stagger: 0.05,
-        x: -(innerWidth * 1.2),
-        ease: "back.in(10)",
-      });
-
-      gsap.to(stickers2Ref, {
-        duration: 0.5,
-        stagger: 0.05,
-        x: 0,
-        ease: "back.out(10)",
-      });
+      timeline1.play();
     } else if (activeIndex == 1) {
-      gsap.to(stickers2Ref, {
-        duration: 0.5,
-        stagger: 0.05,
-        x: -(innerWidth * 1.2),
-        ease: "back.in(10)",
-      });
-
-      gsap.to(stickers3Ref, {
-        duration: 0.5,
-        stagger: 0.05,
-        x: 0,
-        ease: "back.out(10)",
-      });
+      timeline2.play();
     }
 
     activeIndex++;
@@ -184,31 +191,9 @@
       return;
     } else if (activeIndex == 1) {
       phoneScreenRef.reverseTimeline1();
-
-      gsap.to(stickersRef, {
-        duration: 0.5,
-        stagger: 0.05,
-        x: 0,
-        ease: "power2.inOut",
-      });
-
-      gsap.to(stickers2Ref, {
-        duration: 0.5,
-        stagger: 0.05,
-        x: innerWidth * 1.2,
-      });
+      timeline1.reverse();
     } else if (activeIndex == 2) {
-      gsap.to(stickers3Ref, {
-        duration: 0.5,
-        stagger: 0.05,
-        x: innerWidth * 1.2,
-      });
-
-      gsap.to(stickers2Ref, {
-        duration: 0.5,
-        stagger: 0.05,
-        x: 0,
-      });
+      timeline2.reverse();
     }
 
     activeIndex--;
