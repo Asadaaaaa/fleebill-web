@@ -19,7 +19,7 @@
         duration: duration,
         ease: ease,
     }).to(cameraScreenElement, {
-        scale: 0.8,
+        scale: 0.9,
         duration: duration,
         ease: ease,
     }).to(cameraScreenElement, {
