@@ -2,7 +2,7 @@
   import { onMount } from "svelte";
   import { gsap } from "gsap";
   import AppButton from "$lib/components/AppButton.svelte";
-
+  import Icon from "$lib/components/Icon.svelte";
   let topLeft = $state(null);
   let bottomRight = $state(null);
   let topRight = $state(null);
@@ -91,6 +91,6 @@
   </h1>
   
   <AppButton classes="button">
-    <img src="/svg/icon.svg" alt="icon" />
+    <Icon name="Bill" />
   </AppButton>
 </div>

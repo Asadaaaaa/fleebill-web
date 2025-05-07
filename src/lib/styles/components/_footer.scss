@@ -1,6 +1,7 @@
 @use '../abstracts' as *;
 
 .footer {
+  z-index: 2;
   background-color: $color-gray-900;
   color: $color-gray-300;
   padding: $space-8 $space-4;

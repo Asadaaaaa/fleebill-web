@@ -1,0 +1,23 @@
+@use '../abstracts' as *;
+
+.phone-screen {
+  width: 100%;
+  height: 100%;
+  position: relative;
+
+  .camera-screen {
+    position: absolute;
+    z-index: 1;
+    top: 0;
+    left: 0;
+    width: 100%;
+  }
+
+  .receipt {
+    position: relative;
+    width: 70%;
+    height: 70%;
+    margin: 0 auto;
+    top: 40%;
+  }
+}

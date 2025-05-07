@@ -7,6 +7,7 @@
   import { onMount } from "svelte";
   import { app } from "$lib/shared.svelte";
   import Icon from "./Icon.svelte";
+  import PhoneScreen from "./PhoneScreen.svelte";
   const stickers = [
     {
       src: "/images/workflow-sticker/s-f-0.svg",
@@ -113,6 +114,8 @@
   let stickers3Ref = $state([]);
   let activeIndex = $state(0);
 
+  let phoneScreenRef = $state(null);
+
   onMount(() => {
     if (!app.isMobile) {
       stickersRef = document.querySelectorAll(".sticker");
@@ -138,6 +141,8 @@
     if (activeIndex == 2) {
       return;
     } else if (activeIndex == 0) {
+      phoneScreenRef.playTimeline1();
+
       gsap.to(stickersRef, {
         duration: 0.5,
         stagger: 0.05,
@@ -178,6 +183,8 @@
     if (activeIndex == 0) {
       return;
     } else if (activeIndex == 1) {
+      phoneScreenRef.reverseTimeline1();
+
       gsap.to(stickersRef, {
         duration: 0.5,
         stagger: 0.05,
@@ -218,7 +225,7 @@
       <Icon name="BackArrow" />
     </AppButton>
     <PhonePlaceholder>
-      <h1>Item 1</h1>
+      <PhoneScreen bind:this={phoneScreenRef} />
     </PhonePlaceholder>
     <AppButton classes="phone-navigation next-button" onclick={handleNext}>
       <Icon name="NextArrow" />
