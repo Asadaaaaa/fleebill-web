@@ -23,13 +23,7 @@
   });
 
   const highlights = [
-    {
-      title: "Smart & Scan",
-      description:
-        "Point your camera at any receipt—handwritten or printed—and FleeBill’s AI-enhanced scanner instantly captures, corrects, and digitizes every line item so you can move straight to splitting the bill in seconds",
-      color: ["--color-primary", "--color-primary-dark"],
-      image: "/svg/highlight-1.svg",
-    },
+
     {
       title: "Quick Fix Assist",
       description:
@@ -44,12 +38,20 @@
       color: ["--color-secondary", "--color-secondary-dark"],
       image: "/svg/highlight-3.svg",
     },
+        {
+      title: "Smart & Scan",
+      description: "FleeBill’s AI-powered scanner instantly captures and digitizes any handwritten or printed receipt, so you can split the bill in seconds.",
+      color: ["--color-primary", "--color-primary-dark"],
+      image: "/svg/highlight-1.svg",
+    },
   ];
 </script>
 
 <div class="landing-highlight">
   <Spacer />
-  <img src="/svg/subtitle-1.svg" alt="subtitle-1" class="subtitle-1">
+  <div class="subtitle-1" bind:this={title}>
+    <img src="/svg/subtitle-1.svg" alt="subtitle-1" />
+  </div>
   {#each highlights as highlight, index}
     <HighlightCard
       color={highlight.color}
@@ -60,3 +62,4 @@
     />
   {/each}
 </div>
+<Spacer />

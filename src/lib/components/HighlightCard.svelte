@@ -29,7 +29,7 @@
   };
 
   const handleStickerMouseEnter = () => {
-    if(app.isMobile) return
+    if(!app.isMobile)
     gsap.to(sticker, {
       duration: 0.1,
       scale: 1.05,
@@ -38,7 +38,7 @@
   };
 
   const handleStickerMouseLeave = () => {
-    if (app.isMobile) return;
+    if (!app.isMobile)
     gsap.to(sticker, {
       duration: 0.1,
       scale: 1,
@@ -49,7 +49,7 @@
   const desktopAnimation = () => {
     gsap.from(texts, {
       duration: 1,
-      yPercent: -200,
+      opacity: 0,
       ease: "power2.inOut",
       scrollTrigger: {
         trigger: card,
@@ -79,7 +79,7 @@
 </script>
 
 <div
-  class="highlight-card"
+  class="highlight-card highlight-{index}"
   style={`background-color: var(${color[0]})`}
   bind:this={card}
   onmouseenter={handleStickerMouseEnter}
@@ -91,5 +91,5 @@
     <p>{description}</p>
   </div>
   <Spacer size={24} />
-  <img src={image} alt="Highlight Card" bind:this={sticker} />
+  <img src={image} alt="" bind:this={sticker} />
 </div>
