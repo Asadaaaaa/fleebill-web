@@ -3,7 +3,7 @@
 </script>
 
 
-<div class="stickers">
+<div class="workflow-stickers">
   {#each stickers as sticker, index}
     <div 
       class="sticker sticker-{index}"
