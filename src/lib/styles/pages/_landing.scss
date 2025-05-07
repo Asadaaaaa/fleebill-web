@@ -150,10 +150,10 @@
         align-items: center;
 
         .phone-navigation {
-            visibility: hidden;
+            display: none;
 
             @include respond-to(md) {
-                visibility: visible;
+                display: flex;
             }
         }
 

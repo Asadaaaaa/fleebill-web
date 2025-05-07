@@ -5,6 +5,7 @@
   import AppButton from "./AppButton.svelte";
   import { gsap } from "gsap";
   import { onMount } from "svelte";
+  import { app } from "$lib/shared.svelte";
 
   const stickers = [
     {
@@ -113,22 +114,27 @@
   let activeIndex = $state(0);
 
   onMount(() => {
-    stickersRef = document.querySelectorAll(".sticker");
-    stickers2Ref = document.querySelectorAll(".sticker-sf");
-    stickers3Ref = document.querySelectorAll(".sticker-sf-2");
-    
+    if (!app.isMobile) {
+      stickersRef = document.querySelectorAll(".sticker");
+      stickers2Ref = document.querySelectorAll(".sticker-sf");
+      stickers3Ref = document.querySelectorAll(".sticker-sf-2");
 
-    gsap.set(stickers2Ref, {
-      x: innerWidth * 1.2,
-      immediateRender: true,
-    });
-    gsap.set(stickers3Ref, {
-      x: innerWidth * 1.2,
-      immediateRender: true,
-    });
+      gsap.set(stickers2Ref, {
+        x: innerWidth * 1.2,
+        immediateRender: true,
+      });
+      gsap.set(stickers3Ref, {
+        x: innerWidth * 1.2,
+        immediateRender: true,
+      });
+    }
   });
 
   const handleNext = () => {
+    if (app.isMobile) {
+      return;
+    }
+
     if (activeIndex == 2) {
       return;
     } else if (activeIndex == 0) {
@@ -165,6 +171,10 @@
   };
 
   const handleBack = () => {
+    if (app.isMobile) {
+      return;
+    }
+
     if (activeIndex == 0) {
       return;
     } else if (activeIndex == 1) {
@@ -205,14 +215,14 @@
   <h2>Workflow</h2>
   <div class="phone-wrapper">
     <AppButton classes="phone-navigation back-button" onclick={handleBack}>
-      <img src="/svg/back-button.svg" alt="Back">
+      <img src="/svg/back-button.svg" alt="Back" />
     </AppButton>
     <PhonePlaceholder>
       <h1>Item 1</h1>
     </PhonePlaceholder>
     <AppButton classes="phone-navigation next-button" onclick={handleNext}>
-      <img src="/svg/next-button.svg" alt="Next">
+      <img src="/svg/next-button.svg" alt="Next" />
     </AppButton>
   </div>
-  <Stickers stickers={stickers} {stickers2} {stickers3} />
+  <Stickers {stickers} {stickers2} {stickers3} />
 </div>
