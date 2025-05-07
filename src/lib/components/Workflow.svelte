@@ -6,7 +6,7 @@
   import { gsap } from "gsap";
   import { onMount } from "svelte";
   import { app } from "$lib/shared.svelte";
-
+  import Icon from "./Icon.svelte";
   const stickers = [
     {
       src: "/images/workflow-sticker/s-f-0.svg",
@@ -212,16 +212,16 @@
 
 <div class="landing-workflow">
   <Spacer />
-  <img src="/svg/subtitle-2.svg" alt="subtitle-2" class="subtitle-2">
+  <Icon name="Subtitle-2" />
   <div class="phone-wrapper">
     <AppButton classes="phone-navigation back-button" onclick={handleBack}>
-      <img src="/svg/back-button.svg" alt="Back" />
+      <Icon name="BackArrow" />
     </AppButton>
     <PhonePlaceholder>
       <h1>Item 1</h1>
     </PhonePlaceholder>
     <AppButton classes="phone-navigation next-button" onclick={handleNext}>
-      <img src="/svg/next-button.svg" alt="Next" />
+      <Icon name="NextArrow" />
     </AppButton>
   </div>
   <Stickers {stickers} {stickers2} {stickers3} />

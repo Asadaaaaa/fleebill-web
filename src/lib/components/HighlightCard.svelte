@@ -4,10 +4,10 @@
   import { onMount } from "svelte";
   import { ScrollTrigger } from "gsap/dist/ScrollTrigger.js";
   import { app } from "$lib/shared.svelte";
-
+  import Icon from "$lib/components/Icon.svelte";
   gsap.registerPlugin(ScrollTrigger);
 
-  let { title, description, color, image, index } = $props();
+  let { title, description, color, icon, index } = $props();
 
   let card = $state(null);
   let texts = $state(null);
@@ -91,5 +91,7 @@
     <p>{description}</p>
   </div>
   <Spacer size={24} />
-  <img src={image} alt="" bind:this={sticker} />
+  <div class="sticker-icon" bind:this={sticker} >
+    <Icon name={icon} />
+  </div>
 </div>

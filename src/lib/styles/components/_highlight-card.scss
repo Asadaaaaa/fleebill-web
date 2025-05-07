@@ -28,7 +28,7 @@
             transform: translateY(-5px);
         }
 
-        > img {
+        .sticker-icon {
             position: absolute;
             z-index: 0;
             margin-right: -50px;
@@ -41,7 +41,7 @@
                     max-width: 50%;
                 }
 
-                >img{
+                .sticker-icon{
                     bottom: -10px;
                     left: -10px;
                 }
@@ -54,7 +54,7 @@
                     max-width: 50%;
                     }
                 }
-                >img{
+                .sticker-icon{
                     bottom: -50px;
                     right: 50px;
                 }
@@ -67,7 +67,7 @@
                     flex-direction: column;
                     justify-content: end;
                 }
-                >img{
+                .sticker-icon{
                     top: -40px;
                 }
             }
@@ -95,7 +95,7 @@
         }
     }
 
-    > img {
+    .sticker-icon {
         width: 100%;
         aspect-ratio: 1;
     }

@@ -17,10 +17,15 @@ body {
   // CSS Variables for colors
   --color-primary: #{$color-primary};
   --color-primary-dark: #{$color-primary-dark};
+  --color-primary-light: #{$color-primary-light};
   --color-secondary: #{$color-secondary};
   --color-secondary-dark: #{$color-secondary-dark};
+  --color-secondary-light: #{$color-secondary-light};
   --color-accent-1: #{$color-accent-1};
   --color-accent-1-dark: #{$color-accent-1-dark};
+  --color-accent-1-light: #{$color-accent-1-light};
+  --color-accent-2: #{$color-accent-2};
+  --color-accent-2-dark: #{$color-accent-2-dark};
 }
 
 // Theme-specific classes can be added here
