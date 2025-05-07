@@ -2,9 +2,10 @@
   import Spacer from "$lib/components/Spacer.svelte";
   import { gsap } from "gsap";
   import { onMount } from "svelte";
-  import { ScrollTrigger } from "gsap/dist/ScrollTrigger.js";
   import { app } from "$lib/shared.svelte";
   import Icon from "$lib/components/Icon.svelte";
+  import { ScrollTrigger } from "gsap/ScrollTrigger";
+
   gsap.registerPlugin(ScrollTrigger);
 
   let { title, description, color, icon, index } = $props();

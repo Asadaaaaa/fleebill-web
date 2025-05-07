@@ -4,7 +4,7 @@
   import { onMount } from "svelte";
   import { app } from "$lib/shared.svelte";
   import { gsap } from "gsap";
-  import { ScrollTrigger } from "gsap/dist/ScrollTrigger.js";
+  import { ScrollTrigger } from "gsap/ScrollTrigger";
   import Icon from "$lib/components/Icon.svelte";
 
   gsap.registerPlugin(ScrollTrigger);
