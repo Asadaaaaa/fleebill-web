@@ -28,11 +28,6 @@
       size: 160,
     },
     {
-      src: "/images/workflow-sticker/s-f-0.svg",
-      alt: "Sticker 5",
-      size: 120,
-    },
-    {
       src: "/images/workflow-sticker/s-f-1.svg",
       alt: "Sticker 6",
       size: 180,
@@ -64,11 +59,6 @@
       src: "/images/workflow-sticker/s-f-7.svg",
       alt: "Sticker 4",
       size: 160,
-    },
-    {
-      src: "/images/workflow-sticker/s-f-4.svg",
-      alt: "Sticker 5",
-      size: 120,
     },
     {
       src: "/images/workflow-sticker/s-f-5.svg",
@@ -104,11 +94,6 @@
       size: 160,
     },
     {
-      src: "/images/workflow-sticker/s-f-8.svg",
-      alt: "Sticker 5",
-      size: 120,
-    },
-    {
       src: "/images/workflow-sticker/s-f-9.svg",
       alt: "Sticker 6",
       size: 180,
@@ -131,13 +116,14 @@
     stickersRef = document.querySelectorAll(".sticker");
     stickers2Ref = document.querySelectorAll(".sticker-sf");
     stickers3Ref = document.querySelectorAll(".sticker-sf-2");
+    
 
     gsap.set(stickers2Ref, {
-      x: innerWidth * 1.1,
+      x: innerWidth * 1.2,
       immediateRender: true,
     });
     gsap.set(stickers3Ref, {
-      x: innerWidth * 1.1,
+      x: innerWidth * 1.2,
       immediateRender: true,
     });
   });
@@ -149,7 +135,7 @@
       gsap.to(stickersRef, {
         duration: 0.5,
         stagger: 0.05,
-        x: -(innerWidth * 1.1),
+        x: -(innerWidth * 1.2),
         ease: "back.in(10)",
       });
 
@@ -163,7 +149,7 @@
       gsap.to(stickers2Ref, {
         duration: 0.5,
         stagger: 0.05,
-        x: -(innerWidth * 1.1),
+        x: -(innerWidth * 1.2),
         ease: "back.in(10)",
       });
 
@@ -192,13 +178,13 @@
       gsap.to(stickers2Ref, {
         duration: 0.5,
         stagger: 0.05,
-        x: innerWidth * 1.1,
+        x: innerWidth * 1.2,
       });
     } else if (activeIndex == 2) {
       gsap.to(stickers3Ref, {
         duration: 0.5,
         stagger: 0.05,
-        x: innerWidth * 1.1,
+        x: innerWidth * 1.2,
       });
 
       gsap.to(stickers2Ref, {
@@ -218,14 +204,14 @@
   <Spacer />
   <h2>Workflow</h2>
   <div class="phone-wrapper">
-    <AppButton class="phone-navigation back-button" onclick={handleBack}>
-      <h5>Back</h5>
+    <AppButton classes="phone-navigation back-button" onclick={handleBack}>
+      <img src="/svg/back-button.svg" alt="Back">
     </AppButton>
     <PhonePlaceholder>
       <h1>Item 1</h1>
     </PhonePlaceholder>
-    <AppButton class="phone-navigation next-button" onclick={handleNext}>
-      <h5>Next</h5>
+    <AppButton classes="phone-navigation next-button" onclick={handleNext}>
+      <img src="/svg/next-button.svg" alt="Next">
     </AppButton>
   </div>
   <Stickers stickers={stickers} {stickers2} {stickers3} />
