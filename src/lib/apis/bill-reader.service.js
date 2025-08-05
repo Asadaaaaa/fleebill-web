@@ -47,10 +47,14 @@ export class BillReaderService {
         throw new Error('Invalid response structure from bill reader API');
       }
 
+      if (!data.data.billAnalysis.isBill) {
+        throw new Error('The image is not a bill');
+      }
+
       return data;
     } catch (error) {
       console.error('Error analyzing bill:', error);
-      throw new Error(`Failed to analyze bill: ${error instanceof Error ? error.message : 'Unknown error'}`);
+      throw new Error(`${error instanceof Error ? error.message : 'Unknown error'}`);
     }
   }
 } 
