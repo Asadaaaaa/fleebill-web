@@ -6,7 +6,7 @@
   import ErrorHandler from "$lib/components/ErrorHandler.svelte";
   import { handleApiError } from "$lib/utils/error-handler";
   import LoadingScreen from "$lib/components/LoadingScreen.svelte";
-
+  import { app } from "$lib/shared.svelte";
   let topLeft = $state(null);
   let bottomRight = $state(null);
   let topRight = $state(null);
@@ -71,7 +71,6 @@
 
     isAnalyzing = true;
     error = null;
-    billResult = null;
 
     try {
       // Create FormData to send to the API endpoint
@@ -90,8 +89,7 @@
       }
 
       const data = await response.json();
-      billResult = data;
-      console.log("Bill analysis result:", data);
+      app.billData = data;
     } catch (err) {
       const apiError = handleApiError(err);
       error = apiError.message;
