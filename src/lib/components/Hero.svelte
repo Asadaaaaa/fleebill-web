@@ -77,9 +77,24 @@
     billResult = null;
 
     try {
-      const response = await billReaderService.analyzeBill({ image: file });
-      billResult = response;
-      console.log("Bill analysis result:", response);
+      // Create FormData to send to the API endpoint
+      const formData = new FormData();
+      formData.append('image', file);
+
+      // Call the API endpoint instead of the service directly
+      const response = await fetch('/api/bill-reader', {
+        method: 'POST',
+        body: formData,
+      });
+
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.message || `HTTP error! status: ${response.status}`);
+      }
+
+      const data: BillReaderResponse = await response.json();
+      billResult = data;
+      console.log("Bill analysis result:", data);
     } catch (err) {
       const apiError = handleApiError(err);
       error = apiError.message;
