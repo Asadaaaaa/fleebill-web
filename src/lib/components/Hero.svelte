@@ -3,6 +3,7 @@
   import { gsap } from "gsap";
   import AppButton from "$lib/components/AppButton.svelte";
   import Icon from "$lib/components/Icon.svelte";
+  import ErrorHandler from "$lib/components/ErrorHandler.svelte";
   import { BillReaderService } from "$lib/apis/bill-reader.service";
   import { handleApiError } from "$lib/utils/error-handler";
   import type { BillReaderResponse } from "$lib/types/bill-reader";
@@ -88,6 +89,17 @@
     }
   };
 
+  const handleRetry = () => {
+    error = null;
+    if (file) {
+      readBill();
+    }
+  };
+
+  const handleCloseError = () => {
+    error = null;
+  };
+
   onMount(() => {
     handleStickers();
     handleTexts();
@@ -124,4 +136,11 @@
   <AppButton classes="button" onclick={openImagePicker}>
     <Icon name="Bill" />
   </AppButton>
+
+  <!-- Error Handler -->
+  <ErrorHandler 
+    error={error} 
+    onRetry={handleRetry}
+    onClose={handleCloseError}
+  />
 </div>
