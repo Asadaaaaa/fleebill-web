@@ -1,12 +1,10 @@
-<script lang="ts">
+<script>
   import { onMount } from "svelte";
   import { gsap } from "gsap";
   import AppButton from "$lib/components/AppButton.svelte";
   import Icon from "$lib/components/Icon.svelte";
   import ErrorHandler from "$lib/components/ErrorHandler.svelte";
-  import { BillReaderService } from "$lib/apis/bill-reader.service";
   import { handleApiError } from "$lib/utils/error-handler";
-  import type { BillReaderResponse } from "$lib/types/bill-reader";
 
   let topLeft = $state(null);
   let bottomRight = $state(null);
@@ -15,14 +13,12 @@
 
   // Bill reader state
   let isAnalyzing = $state(false);
-  let billResult = $state<BillReaderResponse | null>(null);
-  let error = $state<string | null>(null);
-  let file = $state<File | null>(null);
+  let billResult = $state(null);
+  let error = $state(null);
+  let file = $state(null);
 
   // Reference to hidden file input
-  let fileInput: HTMLInputElement;
-
-  const billReaderService = BillReaderService.getInstance();
+  let fileInput;
 
   const curve = "expo.out";
   const duration = 2;
@@ -50,8 +46,8 @@
   };
 
   // Handle file selection
-  const handleFileChange = async (event: Event) => {
-    const target = event.target as HTMLInputElement;
+  const handleFileChange = async (event) => {
+    const target = event.target;
     if (target.files && target.files[0]) {
       const selectedFile = target.files[0];
       
@@ -92,7 +88,7 @@
         throw new Error(errorData.message || `HTTP error! status: ${response.status}`);
       }
 
-      const data: BillReaderResponse = await response.json();
+      const data = await response.json();
       billResult = data;
       console.log("Bill analysis result:", data);
     } catch (err) {

@@ -1,8 +1,8 @@
 export class ApiError extends Error {
-  public status: number;
-  public code: string;
+  status;
+  code;
 
-  constructor(message: string, status: number = 500, code: string = 'UNKNOWN_ERROR') {
+  constructor(message, status = 500, code = 'UNKNOWN_ERROR') {
     super(message);
     this.name = 'ApiError';
     this.status = status;
@@ -11,13 +11,13 @@ export class ApiError extends Error {
 }
 
 export class BillReaderError extends ApiError {
-  constructor(message: string, status: number = 500) {
+  constructor(message, status = 500) {
     super(message, status, 'BILL_READER_ERROR');
     this.name = 'BillReaderError';
   }
 }
 
-export const handleApiError = (error: unknown): ApiError => {
+export const handleApiError = (error) => {
   if (error instanceof ApiError) {
     return error;
   }
@@ -29,7 +29,7 @@ export const handleApiError = (error: unknown): ApiError => {
   return new ApiError('An unknown error occurred');
 };
 
-export const isNetworkError = (error: unknown): boolean => {
+export const isNetworkError = (error) => {
   if (error instanceof Error) {
     return error.message.includes('fetch') || 
            error.message.includes('network') || 

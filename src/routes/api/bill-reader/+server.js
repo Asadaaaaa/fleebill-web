@@ -1,14 +1,13 @@
 import { json } from '@sveltejs/kit';
-import type { RequestHandler } from '@sveltejs/kit';
-import { BillReaderService } from '../../../lib/apis/bill-reader.service';
-import { handleApiError, BillReaderError } from '../../../lib/utils/error-handler';
-import type { BillReaderResponse } from '../../../lib/types/bill-reader';
+import { BillReaderService } from '../../../lib/apis/bill-reader.service.js';
+import { handleApiError, BillReaderError } from '../../../lib/utils/error-handler.js';
+import { BillReaderResponse } from '../../../lib/types/bill-reader.js';
 
-export const POST: RequestHandler = async ({ request }) => {
+export const POST = async ({ request }) => {
   try {
     // Parse the form data
     const formData = await request.formData();
-    const imageFile = formData.get('image') as File;
+    const imageFile = formData.get('image');
 
     // Validate the image file
     if (!imageFile) {
@@ -23,7 +22,7 @@ export const POST: RequestHandler = async ({ request }) => {
     const billReaderService = BillReaderService.getInstance();
 
     // Analyze the bill
-    const response: BillReaderResponse = await billReaderService.analyzeBill({
+    const response = await billReaderService.analyzeBill({
       image: imageFile
     });
 

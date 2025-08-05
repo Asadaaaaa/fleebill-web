@@ -1,313 +1,341 @@
-# sv
+# FleeBill Web - Bill Reader API
 
-Everything you need to build a Svelte project, powered by [`sv`](https://github.com/sveltejs/cli).
+A SvelteKit application that provides bill analysis functionality through image processing.
 
-## Creating a project
-
-If you're seeing this, you've probably already done this step. Congrats!
-
-```bash
-# create a new project in the current directory
-npx sv create
-
-# create a new project in my-app
-npx sv create my-app
-```
-
-## Developing
-
-Once you've created a project and installed dependencies with `npm install` (or `pnpm install` or `yarn`), start a development server:
-
-```bash
-npm run dev
-
-# or start the server and open the app in a new browser tab
-npm run dev -- --open
-```
-
-## Building
-
-To create a production version of your app:
-
-```bash
-npm run build
-```
-
-You can preview the production build with `npm run preview`.
-
-> To deploy your app, you may need to install an [adapter](https://svelte.dev/docs/kit/adapters) for your target environment.
-
-## SCSS Structure
-
-This project uses a modular SCSS architecture based on the 7-1 pattern (7 folders, 1 main file). The structure is organized as follows:
+## 🏗️ Architecture Overview
 
 ```
-src/lib/styles/
-|
-|– abstracts/            # Tools and helpers
-|   |– _variables.scss   # Global variables
-|   |– _functions.scss   # Custom functions
-|   |– _mixins.scss      # Custom mixins
-|   |– _placeholders.scss # Placeholders & extends
-|
-|– base/                 # Project foundation
-|   |– _reset.scss       # Reset/normalize
-|   |– _typography.scss  # Typography rules
-|   |– _utilities.scss   # Utility classes
-|
-|– components/           # UI components
-|   |– _buttons.scss     # Buttons
-|   |– _forms.scss       # Forms
-|   |– _cards.scss       # Cards
-|   |– ...               # Etc.
-|
-|– layout/               # Layout components
-|   |– _header.scss      # Header
-|   |– _footer.scss      # Footer
-|   |– _navigation.scss  # Navigation
-|   |– _grid.scss        # Grid system
-|
-|– pages/                # Page-specific styles
-|   |– _home.scss        # Home page
-|   |– ...               # Other pages
-|
-|– themes/               # Theme styles
-|   |– _default.scss     # Default theme
-|   |– _dark.scss        # Dark theme
-|
-|– vendors/              # Third-party CSS
-|   |– ...               # Any third-party styles
-|
-|– main.scss             # Main file that imports everything
+┌─────────────────┐    ┌──────────────────┐    ┌─────────────────┐    ┌─────────────────┐
+│   Frontend      │    │   API Route      │    │   Service       │    │   External      │
+│   (Hero.svelte) │───▶│   (+server.ts)   │───▶│   Layer         │───▶│   API/Service   │
+└─────────────────┘    └──────────────────┘    └─────────────────┘    └─────────────────┘
 ```
 
-### Detailed Component Breakdown
+## 📊 Data Flow Documentation
 
-#### Abstracts
+### 1. **User Interaction Flow**
 
-- **_variables.scss**: Defines global design tokens including colors, typography, spacing, borders, shadows, z-indices, breakpoints, and grid settings.
-  ```scss
-  $color-primary: #4682B4;            // Steel Blue
-  $font-size-base: 1rem;
-  $space-4: 1rem;                     // 16px
-  $border-radius: 0.25rem;
-  $breakpoint-md: 768px;
-  ```
+```
+User clicks "Bill" button
+         ↓
+File picker opens
+         ↓
+User selects image file
+         ↓
+File validation (image type check)
+         ↓
+Loading state activated
+         ↓
+API call to /api/bill-reader
+         ↓
+Server processes image
+         ↓
+Response returned to frontend
+         ↓
+Success/Error state displayed
+```
 
-- **_functions.scss**: Contains utility functions for transformations like px to rem/em, color manipulations, z-index management, and spacing calculations.
-  ```scss
-  @function rem($pixels, $context: 16) {
-    @return ($pixels / $context) * 1rem;
+### 2. **Frontend Components**
+
+#### Hero.svelte
+- **Location**: `src/lib/components/Hero.svelte`
+- **Purpose**: Main UI component for bill analysis
+- **Key Functions**:
+  - `openImagePicker()`: Triggers file selection
+  - `handleFileChange()`: Processes selected file
+  - `readBill()`: Initiates bill analysis
+  - `handleRetry()`: Retry failed requests
+  - `handleCloseError()`: Clear error state
+
+#### ErrorHandler.svelte
+- **Location**: `src/lib/components/ErrorHandler.svelte`
+- **Purpose**: Displays errors and provides retry functionality
+- **Props**:
+  - `error`: Error message string
+  - `onRetry`: Retry callback function
+  - `onClose`: Close error callback function
+
+### 3. **API Route Layer**
+
+#### `/api/bill-reader/+server.ts`
+- **Endpoint**: `POST /api/bill-reader`
+- **Purpose**: Server-side API handler for bill analysis
+- **Process**:
+  1. Receives multipart form data with image
+  2. Validates file type (must be image)
+  3. Calls BillReaderService
+  4. Returns JSON response or error
+
+```typescript
+// Request Format
+FormData {
+  image: File (image/*)
+}
+
+// Response Format
+{
+  status: 200,
+  message: "OK",
+  data: {
+    billAnalysis: { /* bill data */ },
+    imageUsed: boolean,
+    imageFileName: string,
+    timestamp: string
   }
+}
+```
 
-  @function spacing($size) {
-    // Returns standardized spacing values
-  }
-  ```
+### 4. **Service Layer**
 
-- **_mixins.scss**: Provides reusable code blocks for responsive design, flex/grid layouts, container sizing, typography, transitions, and component variants.
-  ```scss
-  @mixin respond-to($breakpoint) {
-    // Media query handler for responsive design
-  }
+#### BillReaderService
+- **Location**: `src/lib/apis/bill-reader.service.ts`
+- **Pattern**: Singleton service
+- **Methods**:
+  - `analyzeBill(request)`: Main analysis method
+  - `isValidBill(response)`: Validates bill response
+  - `getBillTotal(response)`: Extracts total amount
+  - `getBillItems(response)`: Extracts bill items
 
-  @mixin container($padding: $space-4) {
-    // Container sizing with breakpoints
-  }
-  ```
+#### Error Handling
+- **Location**: `src/lib/utils/error-handler.ts`
+- **Classes**:
+  - `ApiError`: Base error class
+  - `BillReaderError`: Specific bill reader errors
+- **Utilities**:
+  - `handleApiError()`: Consistent error handling
+  - `isNetworkError()`: Network error detection
 
-- **_placeholders.scss**: Defines extendable styles for common patterns like containers, clearfix, text truncation, list reset, button reset, and more.
-  ```scss
-  %list-reset {
-    list-style: none;
-    padding-left: 0;
-    margin: 0;
-  }
-  ```
+### 5. **Type Definitions**
 
-#### Base
+#### Bill Reader Types
+- **Location**: `src/lib/types/bill-reader.ts`
+- **Interfaces**:
+  - `BillItem`: Individual bill items
+  - `BillAnalysisData`: Bill analysis data
+  - `BillAnalysis`: Complete bill analysis
+  - `BillReaderResponse`: API response structure
+  - `BillReaderRequest`: API request structure
 
-- **_reset.scss**: Modern CSS reset that normalizes browser defaults, sets box-sizing, removes margins/padding, and establishes sensible defaults.
-  ```scss
-  *, *::before, *::after {
-    box-sizing: border-box;
-  }
-  ```
+## 🔄 Detailed Data Flow
 
-- **_typography.scss**: Typography system with responsive font sizing, heading hierarchies, paragraph styles, lists, links, code blocks, and text utilities.
-  ```scss
-  h1 {
-    font-size: $font-size-2xl;
-    line-height: $line-height-tight;
-    
-    @include respond-to(md) {
-      font-size: $font-size-3xl;
-    }
-  }
-  ```
+### Step 1: User Initiates Analysis
+```typescript
+// Hero.svelte
+const openImagePicker = () => {
+  fileInput.click(); // Triggers hidden file input
+};
+```
 
-- **_utilities.scss**: Comprehensive utility classes for display, flex/grid, spacing, colors, borders, positioning, visibility, sizing, and more.
-  ```scss
-  .d-flex { display: flex !important; }
-  .mt-4 { margin-top: spacing(4) !important; }
-  .text-primary { color: $color-primary !important; }
-  ```
-
-#### Layout
-
-- **_grid.scss**: Flexible grid system with container classes, rows/columns, responsive column sizing, order controls, offset options, and CSS Grid utilities.
-  ```scss
-  .container {
-    @extend %container;
+### Step 2: File Selection & Validation
+```typescript
+// Hero.svelte
+const handleFileChange = async (event: Event) => {
+  const file = event.target.files[0];
+  
+  // Client-side validation
+  if (!file.type.startsWith('image/')) {
+    error = 'Please select an image file';
+    return;
   }
   
-  .row {
-    display: flex;
-    flex-wrap: wrap;
-    margin: 0 -#{$grid-gutter-width / 2};
-  }
-  ```
-
-- **_header.scss**: Sticky header component with logo, responsive navigation, menu items, and mobile toggle functionality.
-  ```scss
-  .header {
-    position: sticky;
-    top: 0;
-    z-index: $z-index-sticky;
-    box-shadow: $box-shadow;
-  }
-  ```
-
-- **_footer.scss**: Adaptable footer with responsive grid layout, brand section, navigation lists, social icons, and copyright/legal links.
-  ```scss
-  .footer__grid {
-    display: grid;
-    grid-template-columns: repeat(1, 1fr);
-    
-    @include respond-to(lg) {
-      grid-template-columns: 2fr 1fr 1fr 1fr;
-    }
-  }
-  ```
-
-- **_navigation.scss**: Navigation patterns including main nav, mobile toggles, dropdowns, and breadcrumbs with responsive behavior.
-  ```scss
-  .dropdown__menu {
-    position: absolute;
-    opacity: 0;
-    visibility: hidden;
-    transition: opacity 0.2s ease, transform 0.2s ease;
-  }
-  ```
-
-#### Components
-
-- **_buttons.scss**: Comprehensive button system with variants (primary, secondary, etc.), sizes, states, shapes, and button groups.
-  ```scss
-  .btn {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    padding: $space-2 $space-4;
-    border-radius: $border-radius;
-  }
-  
-  .btn--primary {
-    @include button-variant($color-primary);
-  }
-  ```
-
-- **_forms.scss**: Form controls, labels, feedback states, custom inputs (select, checkbox, radio, file, range), switches, and floating labels.
-  ```scss
-  .form-control {
-    display: block;
-    width: 100%;
-    padding: $space-2 $space-3;
-    border: 1px solid $color-gray-400;
-    border-radius: $border-radius;
-  }
-  ```
-
-- **_cards.scss**: Card components with variants, body, header/footer, images, overlays, and responsive card grids.
-  ```scss
-  .card {
-    display: flex;
-    flex-direction: column;
-    border-radius: $border-radius;
-    box-shadow: $box-shadow-sm;
-    transition: box-shadow 0.3s ease, transform 0.3s ease;
-  }
-  ```
-
-#### Pages
-
-- **_home.scss**: Page-specific styles for the home page including hero section, features grid, testimonials, and call-to-action sections.
-  ```scss
-  .hero {
-    position: relative;
-    padding: $space-12 0;
-    background-color: $color-gray-100;
-    overflow: hidden;
-  }
-  
-  .features__grid {
-    display: grid;
-    grid-template-columns: repeat(1, 1fr);
-    
-    @include respond-to(lg) {
-      grid-template-columns: repeat(3, 1fr);
-    }
-  }
-  ```
-
-#### Themes
-
-- **_default.scss**: Default theme for the application with customizations for typography, colors, component styling, and browser-specific enhancements.
-  ```scss
-  .theme-default {
-    .card:hover {
-      transform: translateY(-5px);
-      box-shadow: $box-shadow-md;
-    }
-    
-    ::selection {
-      background-color: rgba($color-primary, 0.2);
-    }
-  }
-  ```
-
-### Usage
-
-The SCSS structure follows these principles:
-
-1. **Variables & Configuration**: All global variables are defined in the abstracts folder
-2. **Component-Based**: Each UI component has its own SCSS file
-3. **Responsive by Default**: Built with mobile-first approach
-4. **Modular & Reusable**: Styles are organized to prevent duplication
-5. **BEM Methodology**: Block Element Modifier naming convention for classes
-
-To use these styles in your Svelte components:
-
-```svelte
-<script>
-  import '$lib/styles/main.scss';
-  // Component code
-</script>
+  await readBill(); // Proceed with analysis
+};
 ```
 
-You can also import specific modules in components that need them:
-
-```svelte
-<script>
-  import '$lib/styles/components/_buttons.scss';
-  // Component code
-</script>
+### Step 3: API Request
+```typescript
+// Hero.svelte
+const readBill = async () => {
+  isAnalyzing = true;
+  
+  try {
+    const response = await billReaderService.analyzeBill({ image: file });
+    billResult = response;
+  } catch (err) {
+    error = handleApiError(err).message;
+  } finally {
+    isAnalyzing = false;
+  }
+};
 ```
 
-### Best Practices
+### Step 4: Service Layer Processing
+```typescript
+// BillReaderService
+async analyzeBill(request: BillReaderRequest): Promise<BillReaderResponse> {
+  const formData = new FormData();
+  formData.append('image', request.image);
+  
+  const response = await fetch('/api/bill-reader', {
+    method: 'POST',
+    body: formData
+  });
+  
+  return response.json();
+}
+```
 
-1. **Always use variables**: Instead of hardcoding values, reference variables from _variables.scss
-2. **Follow BEM naming**: Use Block__Element--Modifier pattern for class names (e.g., .card__title, .btn--primary)
-3. **Mobile-first approach**: Start with mobile styles and add breakpoints using the respond-to mixin
-4. **Avoid deep nesting**: Limit nesting to 3 levels maximum to prevent specificity issues
-5. **Utility classes**: Use utility classes for minor adjustments rather than creating custom CSS
+### Step 5: Server-Side Processing
+```typescript
+// +server.ts
+export const POST: RequestHandler = async ({ request }) => {
+  const formData = await request.formData();
+  const imageFile = formData.get('image') as File;
+  
+  // Server-side validation
+  if (!imageFile.type.startsWith('image/')) {
+    throw new BillReaderError('File must be an image', 400);
+  }
+  
+  // Process through service
+  const response = await billReaderService.analyzeBill({ image: imageFile });
+  
+  return json(response);
+};
+```
+
+### Step 6: Response Handling
+```typescript
+// Frontend receives response
+{
+  status: 200,
+  message: "OK",
+  data: {
+    billAnalysis: {
+      data: {
+        billDate: 1533808925000,
+        billTotalPrice: 60500,
+        name: "McDonald's Bandung Indah Plaza",
+        items: [/* bill items */]
+      },
+      isBill: true,
+      isBlur: false,
+      isHandwriting: false
+    },
+    imageUsed: true,
+    imageFileName: "image-1754367911008-6515398.jpg",
+    timestamp: "2025-08-05T04:25:13.527Z"
+  }
+}
+```
+
+## 🛠️ Error Handling Flow
+
+### Client-Side Errors
+1. **File Type Validation**: Non-image files rejected
+2. **Network Errors**: Connection issues handled
+3. **API Errors**: Server errors displayed to user
+
+### Server-Side Errors
+1. **Missing File**: 400 Bad Request
+2. **Invalid File Type**: 400 Bad Request
+3. **Processing Errors**: 500 Internal Server Error
+4. **External API Errors**: Propagated with status codes
+
+## 📁 File Structure
+
+```
+src/
+├── lib/
+│   ├── apis/
+│   │   ├── bill-reader.service.ts    # Service layer
+│   │   └── index.ts                  # API exports
+│   ├── components/
+│   │   ├── Hero.svelte              # Main UI component
+│   │   ├── ErrorHandler.svelte      # Error display
+│   │   └── AppButton.svelte         # Button component
+│   ├── types/
+│   │   ├── bill-reader.ts           # Type definitions
+│   │   └── index.ts                 # Type exports
+│   └── utils/
+│       ├── error-handler.ts         # Error utilities
+│       └── index.ts                 # Utility exports
+└── routes/
+    └── api/
+        └── bill-reader/
+            └── +server.ts           # API endpoint
+```
+
+## 🚀 Getting Started
+
+1. **Install Dependencies**
+   ```bash
+   npm install
+   ```
+
+2. **Start Development Server**
+   ```bash
+   npm run dev
+   ```
+
+3. **Test Bill Reader**
+   - Navigate to the homepage
+   - Click the "Bill" button
+   - Select an image file
+   - View the analysis results
+
+## 🔧 Configuration
+
+### API Base URL
+- **Location**: `src/lib/apis/bill-reader.service.ts`
+- **Default**: `http://localhost:3000`
+- **Customization**: Update `API_BASE_URL` constant
+
+### Error Handling
+- **Location**: `src/lib/utils/error-handler.ts`
+- **Customization**: Extend `ApiError` class for specific error types
+
+## 📝 API Documentation
+
+### POST /api/bill-reader
+
+**Request:**
+- Content-Type: `multipart/form-data`
+- Body: `{ image: File }`
+
+**Response:**
+```json
+{
+  "status": 200,
+  "message": "OK",
+  "data": {
+    "billAnalysis": {
+      "data": {
+        "billDate": 1533808925000,
+        "billTotalPrice": 60500,
+        "name": "Restaurant Name",
+        "items": [...]
+      },
+      "isBill": true,
+      "isBlur": false,
+      "isHandwriting": false
+    },
+    "imageUsed": true,
+    "imageFileName": "image.jpg",
+    "timestamp": "2025-08-05T04:25:13.527Z"
+  }
+}
+```
+
+## 🧪 Testing
+
+The implementation includes:
+- **Type Safety**: Full TypeScript support
+- **Error Handling**: Comprehensive error management
+- **Validation**: Client and server-side validation
+- **User Feedback**: Loading states and error messages
+
+## 🔒 Security Considerations
+
+1. **File Validation**: Server-side image type validation
+2. **Error Sanitization**: Errors don't expose internal details
+3. **Input Validation**: All inputs validated before processing
+4. **CORS**: Proper cross-origin handling through SvelteKit
+
+## 📈 Scalability
+
+The architecture supports:
+- **Service Layer**: Easy to extend with new services
+- **Type Safety**: Prevents runtime errors
+- **Error Handling**: Consistent error management
+- **Component Reusability**: Modular component structure
