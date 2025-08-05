@@ -89,7 +89,7 @@
       }
 
       const data = await response.json();
-      app.billData = data;
+      localStorage.setItem('billData', JSON.stringify(data.data));
     } catch (err) {
       const apiError = handleApiError(err);
       error = apiError.message;
