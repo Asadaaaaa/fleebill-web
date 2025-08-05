@@ -5,6 +5,7 @@
   import Icon from "$lib/components/Icon.svelte";
   import ErrorHandler from "$lib/components/ErrorHandler.svelte";
   import { handleApiError } from "$lib/utils/error-handler";
+  import LoadingScreen from "$lib/components/LoadingScreen.svelte";
 
   let topLeft = $state(null);
   let bottomRight = $state(null);
@@ -117,6 +118,9 @@
     handleButton();
   });
 </script>
+
+
+<LoadingScreen show={isAnalyzing}/>
 
 <div class="landing-hero">
   <div class="stickers">
