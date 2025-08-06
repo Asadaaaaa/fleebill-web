@@ -238,14 +238,16 @@
             <div class="total-breakdown">
               <div class="total-row">
                 <span class="label">Subtotal:</span>
-                <span class="amount">{formatCurrency(editedBillData.billAnalysis.data.billTotalPrice)}</span>
+                <span class="amount">{formatCurrency(editedBillData.billAnalysis.data.billSubtotalPrice)}</span>
               </div>
               
               {#if editedBillData.billAnalysis.data.billDiscounts}
-                <div class="total-row discount">
-                  <span class="label">Discounts:</span>
-                  <span class="amount">-{formatCurrency(editedBillData.billAnalysis.data.billDiscounts)}</span>
-                </div>
+                {#each editedBillData.billAnalysis.data.billDiscounts as discount}
+                  <div class="total-row discount">
+                    <span class="label">{discount.name}:</span>
+                    <span class="amount">-{formatCurrency(discount.value)}</span>
+                  </div>
+                {/each}
               {/if}
               
               {#if editedBillData.billAnalysis.data.otherCosts}
