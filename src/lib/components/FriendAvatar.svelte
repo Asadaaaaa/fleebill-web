@@ -11,6 +11,7 @@
     @include flex(row, center, center);
     width: 40px;
     height: 40px;
+    cursor: pointer;
     border-radius: $border-radius-full;
     color: $color-gray-900;
     font-family: $font-family-primary;

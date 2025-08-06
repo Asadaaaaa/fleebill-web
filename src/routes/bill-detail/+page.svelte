@@ -6,6 +6,7 @@
   import SaveFeedback from '$lib/components/SaveFeedback.svelte';
   import NoBillData from '$lib/components/NoBillData.svelte';
   import FriendsPanel from '$lib/components/FriendsPanel.svelte';
+  import AppButton from '$lib/components/AppButton.svelte';
 
   // Bill data state
   let billData = $state(null);
@@ -253,6 +254,12 @@
           {formatCurrency}
         />
       </div>
+        
+      <div class="split-bill-button">
+        <AppButton>
+          <h1>Split</h1>
+        </AppButton>
+      </div>
     </div>
 
     <div class="spacer"></div>
@@ -285,6 +292,18 @@
   // Bill Content
   .bill-content {
     padding-bottom: $space-16;
+  }
+
+  .split-bill-button {
+    width: 100%;
+    margin: 0 auto;
+    padding: 0 $space-4;
+    margin-top: $space-4;
+    max-width: 1200px;
+
+    h1 {
+      font-size: $font-size-2xl;
+    }
   }
 
   // Responsive Design
