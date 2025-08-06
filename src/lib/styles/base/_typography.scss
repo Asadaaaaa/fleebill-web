@@ -6,16 +6,19 @@
 @font-face {
   font-family: 'Genty';
   src: url('/fonts/Genty.ttf') format('truetype');
+  font-display: swap;
 }
 
 @font-face {
   font-family: 'Urbanist';
   src: url('/fonts/Urbanist.ttf') format('truetype');
+  font-display: swap;
 }
 
 @font-face {
   font-family: 'Rebond';
   src: url('/fonts/Rebond.ttf') format('truetype');
+  font-display: swap;
 }
 
 body {

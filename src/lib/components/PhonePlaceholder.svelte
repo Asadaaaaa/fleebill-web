@@ -1,6 +1,6 @@
 <div class="phone-placeholder">
   <div class="phone">
-    <img src="/images/phone.png" alt="Phone" />
+    <img loading="lazy" src="/images/phone-body.webp" alt="Phone" />
   </div>
   <div class="phone-content">
     <slot />

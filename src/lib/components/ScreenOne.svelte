@@ -6,7 +6,7 @@
     <img src="/svg/camera-screen.svg" alt="Camera Screen" />
   </div>
   <div class="receipt" bind:this={receiptElement}>
-    <img src="/images/receipt.webp" alt="Receipt" />
+    <img loading="lazy" src="/images/receipt.webp" alt="Receipt" />
   </div>
 
   <style>
