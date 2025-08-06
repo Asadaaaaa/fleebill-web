@@ -149,13 +149,11 @@
     font-size: $font-size-xl;
     font-weight: $font-weight-bold;
     color: $color-gray-900;
-    margin: 0;
   }
 
   .total-breakdown {
     display: flex;
     flex-direction: column;
-    gap: $space-2;
   }
 
   .total-row {
@@ -163,8 +161,6 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: $space-2 0;
-    gap: $space-2;
     
     &.discount {
       color: $color-success;
@@ -172,7 +168,7 @@
     
     &.final-total {
       border-top: 2px solid $color-primary;
-      padding-top: $space-3;
+      padding-top: $space-2;
       margin-top: $space-2;
       font-size: $font-size-lg;
       font-weight: $font-weight-bold;
@@ -285,11 +281,6 @@
     color: $color-gray-600;
     font-size: $font-size-sm;
     font-weight: $font-weight-medium;
-  }
-
-  // Section styles
-  .discounts-section, .other-costs-section {
-    margin: $space-2 0;
   }
 
   // Add/Remove button styles
