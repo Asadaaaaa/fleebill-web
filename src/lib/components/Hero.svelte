@@ -1,5 +1,6 @@
 <script>
   import { onMount } from "svelte";
+  import { goto } from "$app/navigation";
   import { gsap } from "gsap";
   import AppButton from "$lib/components/AppButton.svelte";
   import Icon from "$lib/components/Icon.svelte";
@@ -7,6 +8,7 @@
   import { handleApiError } from "$lib/utils/error-handler";
   import LoadingScreen from "$lib/components/LoadingScreen.svelte";
   import { app } from "$lib/shared.svelte";
+  
   let topLeft = $state(null);
   let bottomRight = $state(null);
   let topRight = $state(null);
@@ -90,6 +92,8 @@
 
       const data = await response.json();
       localStorage.setItem('billData', JSON.stringify(data.data));
+      goto('/bill-detail');
+
     } catch (err) {
       const apiError = handleApiError(err);
       error = apiError.message;

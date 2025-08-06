@@ -109,7 +109,6 @@
     <div class="header-section" bind:this={headerRef}>
       <div class="container">
         <div class="header-content">
-          
           <div class="bill-header">
             <div class="restaurant-info">
               {#if isEditing}
@@ -206,7 +205,7 @@
                           min="1"
                         />
                       {:else}
-                        <span class="amount">× {item.amount}</span>
+                        <span class="amount">× {item.amount} {item.type}</span>
                       {/if}
                     </div>
                     
