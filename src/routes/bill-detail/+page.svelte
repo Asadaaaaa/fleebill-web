@@ -830,7 +830,7 @@
   }
 
   .discount-value-input {
-    width: 80px;
+    width: 100%;
     text-align: right;
     background: transparent;
     border: 2px solid $color-success;
@@ -856,7 +856,8 @@
   }
 
   .other-cost-name-input {
-    flex: 1;
+    max-width: 100%;
+    width: 80px;
     background: transparent;
     border: 2px solid $color-primary;
     border-radius: $border-radius;
@@ -873,6 +874,7 @@
   }
 
   .other-cost-percentage-input {
+    width: 80px;
     text-align: right;
     background: transparent;
     border: 2px solid $color-primary;
@@ -934,6 +936,7 @@
     font-size: $font-size-sm;
     font-weight: $font-weight-bold;
     cursor: pointer;
+    aspect-ratio: 1;
     display: flex;
     align-items: center;
     justify-content: center;
