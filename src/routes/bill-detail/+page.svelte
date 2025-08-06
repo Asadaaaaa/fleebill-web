@@ -3,6 +3,7 @@
   import AppButton from '$lib/components/AppButton.svelte';
   import Icon from '$lib/components/Icon.svelte';
   import { gsap } from 'gsap';
+  import { goto } from '$app/navigation';
 
   // Bill data state
   let billData = $state(null);
@@ -250,7 +251,7 @@
               {#if editedBillData.billAnalysis.data.otherCosts}
               {#each editedBillData.billAnalysis.data.otherCosts as otherCost}
                 <div class="total-row">
-                  <span class="label">{otherCost.name}:</span>
+                  <span class="label">{otherCost.name} ({otherCost.percentage}%):</span>
                   <span class="amount">{formatCurrency(otherCost.price)}</span>
                 </div>
               {/each}
@@ -281,7 +282,7 @@
         <Icon name="Bill" />
         <h2>No Bill Data Available</h2>
         <p>Please scan a bill first to view the details.</p>
-        <AppButton classes="btn-primary" onclick={() => history.back()}>
+        <AppButton classes="btn-primary" onclick={() => goto('/')}>
           Go Back
         </AppButton>
       </div>
