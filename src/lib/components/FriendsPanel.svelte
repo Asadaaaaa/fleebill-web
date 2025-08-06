@@ -1,11 +1,9 @@
 <script>
-  let { friends = [], onFriendsChange } = $props();
-  
   let newFriendName = $state('');
-  let newFriendAvatar = $state('');
   let isAddingFriend = $state(false);
   let showModal = $state(false);
-  let internalFriends = $state([...friends]);
+  let internalFriends = $state([]);
+  let onFriendsChange;
   
   // Initialize with "Me" if friends array is empty
   $effect(() => {
@@ -13,52 +11,16 @@
       const meUser = {
         id: 'me',
         name: 'Me',
-        avatar: {
-          initials: 'ME',
-          color: '#E5B0A9' // primary color
-        }
       };
       internalFriends = [meUser];
       onFriendsChange?.(internalFriends);
     }
   });
   
-  // Sync with external friends prop
-  $effect(() => {
-    if (friends.length > 0) {
-      internalFriends = [...friends];
-    }
-  });
-  
-  // Generate random avatar colors from the theme
-  const avatarColors = [
-    '#E5B0A9', // primary
-    '#92D8D8', // secondary  
-    '#FBE480', // tertiary
-    '#B298DC', // accent-1
-    '#86C28B', // accent-2
-    '#F18D8D'  // danger
-  ];
-  
-  const generateAvatar = (name) => {
-    const initials = name
-      .split(' ')
-      .map(word => word.charAt(0))
-      .join('')
-      .toUpperCase()
-      .slice(0, 2);
-    
-    const colorIndex = name.length % avatarColors.length;
-    return {
-      initials,
-      color: avatarColors[colorIndex]
-    };
-  };
   
   const openAddFriendModal = () => {
     showModal = true;
     newFriendName = '';
-    newFriendAvatar = '';
     
     // Auto-focus the input after modal opens
     setTimeout(() => {
@@ -72,16 +34,13 @@
   const closeModal = () => {
     showModal = false;
     newFriendName = '';
-    newFriendAvatar = '';
   };
   
   const addFriend = () => {
     if (newFriendName.trim()) {
-      const avatar = generateAvatar(newFriendName);
       const newFriend = {
         id: Date.now(),
         name: newFriendName.trim(),
-        avatar: newFriendAvatar || avatar
       };
       
       internalFriends = [...internalFriends, newFriend];
@@ -119,21 +78,9 @@
   </div>
   
   <div class="friends-list">
-    {#if internalFriends.length === 0}
-      <div class="empty-state">
-        <div class="empty-icon">👥</div>
-        <p class="empty-text">No friends added yet</p>
-        <p class="empty-subtext">Add friends to split bills with</p>
-      </div>
-    {:else}
-      {#each internalFriends as friend (friend.id)}
+      {#each internalFriends as friend, index (friend.id)}
         <div class="friend-item" class:me-user={friend.id === 'me'}>
-          <div class="friend-avatar" style="background-color: {friend.avatar.color || generateAvatar(friend.name).color}">
-            {#if friend.avatar.initials}
-              {friend.avatar.initials}
-            {:else}
-              {generateAvatar(friend.name).initials}
-            {/if}
+          <div class="friend-avatar" style="background-image: url('/images/placeholder/placeholder_{897+index}.webp'); background-size: cover; background-position: center;">
           </div>
           <div class="friend-info">
             <span class="friend-name">{friend.name}</span>
@@ -148,7 +95,6 @@
           </button>
         </div>
       {/each}
-    {/if}
   </div>
 </div>
 
@@ -206,6 +152,7 @@
     display: flex;
     flex-direction: column;
     gap: $space-4;
+    overflow-y: visible;
   }
   
   .panel-header {
@@ -242,6 +189,7 @@
     flex-direction: row;
     gap: $space-3;
     overflow-x: auto;
+    overflow-y: visible;
     width: 100%;
 
     scrollbar-width: none;
@@ -251,32 +199,6 @@
       display: none;
     }
   }
-  
-  .empty-state {
-    @include flex(column, center, center);
-    padding: $space-8 $space-4;
-    text-align: center;
-  }
-  
-  .empty-icon {
-    font-size: $font-size-3xl;
-    margin-bottom: $space-3;
-  }
-  
-  .empty-text {
-    font-family: $font-family-primary;
-    font-weight: $font-weight-medium;
-    color: $color-gray-300;
-    margin: 0 0 $space-2 0;
-  }
-  
-  .empty-subtext {
-    font-family: $font-family-primary;
-    font-size: $font-size-sm;
-    color: $color-gray-500;
-    margin: 0;
-  }
-  
   .friend-item {
     display: flex;
     align-items: center;
@@ -285,12 +207,6 @@
     background: $color-gray-900;
     border-radius: $border-radius;
     border: 1px solid $color-gray-800;
-    transition: all 0.2s ease;
-    
-    &:hover {
-      background: $color-gray-800;
-      transform: translateY(-2px);
-    }
     
     &.me-user {
       background: $color-primary-light;
@@ -298,7 +214,7 @@
       
       .friend-name {
         font-weight: $font-weight-semibold;
-        color: $color-white;
+        color: $color-gray-900;
       }
     }
   }
