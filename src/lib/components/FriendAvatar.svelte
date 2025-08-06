@@ -16,5 +16,6 @@
     font-family: $font-family-primary;
     font-weight: $font-weight-bold;
     font-size: $font-size-sm;
+    aspect-ratio: 1;
   }
 </style>

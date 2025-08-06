@@ -1,17 +1,18 @@
 <script>
   import FriendAvatar from "./FriendAvatar.svelte";
   import { bill } from "$lib/shared.svelte";
+
   let newFriendName = $state("");
   let isAddingFriend = $state(false);
   let showModal = $state(false);
   let internalFriends = $state([]);
-  let onFriendsChange;
+  let onFriendsChange;  
 
   // Initialize with "Me" if friends array is empty
   $effect(() => {
     if (internalFriends.length === 0) {
       const meUser = {
-        id: "me",
+        id: 897,
         name: "Me",
       };
       internalFriends = [meUser];
@@ -47,7 +48,7 @@
   const addFriend = () => {
     if (newFriendName.trim()) {
       const newFriend = {
-        id: Date.now(),
+        id: 897 + internalFriends.length,
         name: newFriendName.trim(),
       };
 
@@ -60,7 +61,7 @@
 
   const removeFriend = (friendId) => {
     // Don't allow removing "Me"
-    if (friendId === "me") return;
+    if (friendId === 897) return;
 
     internalFriends = internalFriends.filter(
       (friend) => friend.id !== friendId
@@ -89,7 +90,7 @@
 
   <div class="friends-list">
     {#each internalFriends as friend, index (friend.id)}
-      <div class="friend-item" class:me-user={friend.id === "me"}>
+      <div class="friend-item" class:me-user={friend.id === 897}>
         <FriendAvatar id={897 + index} />
         <div class="friend-info">
           <span class="friend-name">{friend.name}</span>
@@ -98,7 +99,7 @@
           class="remove-friend-btn"
           onclick={() => removeFriend(friend.id)}
           aria-label="Remove {friend.name}"
-          disabled={friend.id === "me"}
+          disabled={friend.id === 897}
         >
           <span class="remove-icon">×</span>
         </button>

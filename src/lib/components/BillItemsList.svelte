@@ -20,13 +20,15 @@
 
 <style lang="scss">
   @use '$lib/styles/abstracts' as *;
+
   .items-list {
+    width: 100%;
     display: grid;
     grid-template-columns: 1fr;
     gap: $space-4;
     
     @media (min-width: $breakpoint-md) {
-      grid-template-columns: 1fr 1fr;
+      grid-template-columns: 1fr 1fr 1fr;
     }
   }
 </style> 

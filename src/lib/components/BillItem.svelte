@@ -1,4 +1,7 @@
 <script>
+  import FriendAvatar from "./FriendAvatar.svelte";
+  import { bill, app } from "$lib/shared.svelte";
+
   let { item, index, isEditing, onItemEdit, formatCurrency } = $props();
 
   const handleInputChange = (field, value) => {
@@ -64,19 +67,53 @@
       </div>
     </div>
   </div>
-  
-  {#if item.discount}
-    <div class="discount-info">
-      <span class="discount-label">Discount:</span>
-      <span class="discount-amount">-{formatCurrency(item.discount)}</span>
+
+  <div class="item-friends">
+    <div class="item-friends-label">Select Friend(s) for this item</div>
+    <div class="item-friends-list">
+      {#each bill.friends as friend}
+        <FriendAvatar id={friend.id} />
+      {/each}
     </div>
-  {/if}
+  </div>
 </div>
 
 <style lang="scss">
   @use '$lib/styles/abstracts' as *;
 
+  .item-friends {
+    border-top: 1px solid $color-gray-200;
+    width: 100%;
+    margin-top: $space-2;
+    padding-top: $space-2;
+    display: flex;
+    flex-direction: column;
+    gap: $space-2;
+    flex-wrap: wrap;
+    overflow: hidden;
+  }
+
+  .item-friends-label {
+    font-size: $font-size-sm;
+    color: $color-gray-600;
+  }
+
+  .item-friends-list {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+    &::-webkit-scrollbar {
+      display: none;
+    }
+    gap: $space-2;
+    overflow: auto;
+  }
+
   .item-card {
+    width: 100%;
+    overflow: hidden;
     background: white;
     border-radius: $border-radius-lg;
     padding: $space-6;
@@ -122,6 +159,7 @@
     align-items: flex-start;
     gap: $space-4;
     flex-wrap: wrap;
+    flex-direction: column;
   }
 
   .item-name-section {
@@ -158,6 +196,7 @@
 
   .item-pricing {
     display: flex;
+    width: 100%;
     flex-direction: column;
     gap: $space-2;
     min-width: 150px;
@@ -209,25 +248,6 @@
       border-color: $color-primary-dark;
       box-shadow: 0 0 0 3px rgba($color-primary, 0.1);
     }
-  }
-
-  .discount-info {
-    margin-top: $space-3;
-    padding-top: $space-3;
-    border-top: 1px solid $color-gray-200;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-  }
-
-  .discount-label {
-    color: $color-gray-600;
-    font-size: $font-size-sm;
-  }
-
-  .discount-amount {
-    color: $color-success;
-    font-weight: $font-weight-medium;
   }
 
   @media (max-width: $breakpoint-md) {
