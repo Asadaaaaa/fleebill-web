@@ -154,7 +154,7 @@
 
   .friends-panel {
     background: $color-gray-900;
-    padding: $space-4;
+    padding: $space-4 0 $space-4 0;
     box-shadow: $box-shadow;
     position: fixed;
     bottom: 0;
@@ -170,6 +170,7 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
+    padding: 0 $space-4;
   }
 
   .panel-title {
@@ -198,7 +199,6 @@
   .friends-list {
     display: flex;
     flex-direction: row;
-    gap: $space-3;
     overflow-x: auto;
     overflow-y: visible;
     width: 100%;
@@ -218,6 +218,8 @@
     background: $color-gray-900;
     border-radius: $border-radius;
     border: 1px solid $color-gray-800;
+    margin-left: $space-4;
+
 
     &.me-user {
       background: $color-primary-light;
