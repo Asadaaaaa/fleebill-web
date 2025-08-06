@@ -23,8 +23,8 @@
       </div>
       
       <!-- Discounts Section -->
+      {#if billData.billAnalysis.data.billDiscounts}
       <div class="discounts-section">
-        {#if billData.billAnalysis.data.billDiscounts}
           {#each billData.billAnalysis.data.billDiscounts as discount, index}
             <div class="total-row discount">
               {#if isEditing}
@@ -58,20 +58,20 @@
               {/if}
             </div>
           {/each}
-        {/if}
-        
-        {#if isEditing}
+          
+          {#if isEditing}
           <div class="add-item-row">
             <button class="add-btn" onclick={onAddDiscount}>
               + Add Discount
             </button>
           </div>
-        {/if}
-      </div>
+          {/if}
+        </div>
+      {/if}
       
       <!-- Other Costs Section -->
+      {#if billData.billAnalysis.data.otherCosts}
       <div class="other-costs-section">
-        {#if billData.billAnalysis.data.otherCosts}
           {#each billData.billAnalysis.data.otherCosts as otherCost, index}
             <div class="total-row">
               {#if isEditing}
@@ -107,16 +107,16 @@
               <span class="amount">{formatCurrency(otherCost.price)}</span>
             </div>
           {/each}
-        {/if}
-        
-        {#if isEditing}
+          
+          {#if isEditing}
           <div class="add-item-row">
             <button class="add-btn" onclick={onAddOtherCost}>
               + Add Tax/Cost
             </button>
           </div>
-        {/if}
-      </div>
+          {/if}
+        </div>
+      {/if}
       
       <div class="total-row final-total">
         <span class="label">Total:</span>
@@ -155,7 +155,7 @@
   .total-breakdown {
     display: flex;
     flex-direction: column;
-    gap: $space-3;
+    gap: $space-2;
   }
 
   .total-row {
