@@ -46,6 +46,41 @@
     }
   });
 
+  // Recalculate all totals including subtotal, discounts, taxes, and final total
+  const recalculateTotals = () => {
+    if (!editedBillData) return;
+    
+    const data = editedBillData.billAnalysis.data;
+    
+    // Calculate subtotal from items
+    data.billSubtotalPrice = data.items.reduce(
+      (sum, item) => sum + item.totalPrice, 0
+    );
+    
+    // Calculate total discounts
+    const totalDiscounts = data.billDiscounts ? data.billDiscounts.reduce(
+      (sum, discount) => sum + discount.value, 0
+    ) : 0;
+    
+    // Calculate total after discounts
+    const totalAfterDiscounts = data.billSubtotalPrice - totalDiscounts;
+    
+    // Calculate taxes and other costs based on percentage
+    let totalOtherCosts = 0;
+    if (data.otherCosts) {
+      data.otherCosts.forEach(otherCost => {
+        // Calculate percentage based on subtotal or total after discounts
+        // Most taxes are calculated on subtotal, but some might be on total after discounts
+        const baseAmount = otherCost.calculateOnSubtotal ? data.billSubtotalPrice : totalAfterDiscounts;
+        otherCost.price = Math.round((baseAmount * otherCost.percentage) / 100);
+        totalOtherCosts += otherCost.price;
+      });
+    }
+    
+    // Calculate final total
+    data.billTotalPrice = totalAfterDiscounts + totalOtherCosts;
+  };
+
   // Handle item editing
   const handleItemEdit = (index, field, value) => {
     if (!editedBillData) return;
@@ -64,10 +99,8 @@
       item.totalPrice = item.amount * newPrice;
     }
     
-    // Recalculate total
-    editedBillData.billAnalysis.data.billTotalPrice = editedBillData.billAnalysis.data.items.reduce(
-      (sum, item) => sum + item.totalPrice, 0
-    );
+    // Recalculate all totals
+    recalculateTotals();
     
     hasChanges = true;
   };
@@ -79,6 +112,92 @@
     hasChanges = true;
   };
 
+  // Handle discount editing
+  const handleDiscountEdit = (index, field, value) => {
+    if (!editedBillData || !editedBillData.billAnalysis.data.billDiscounts) return;
+    
+    const discount = editedBillData.billAnalysis.data.billDiscounts[index];
+    
+    if (field === 'name') {
+      discount.name = value;
+    } else if (field === 'value') {
+      discount.value = parseInt(value) || 0;
+    }
+    
+    recalculateTotals();
+    hasChanges = true;
+  };
+
+  // Handle other cost (tax) editing
+  const handleOtherCostEdit = (index, field, value) => {
+    if (!editedBillData || !editedBillData.billAnalysis.data.otherCosts) return;
+    
+    const otherCost = editedBillData.billAnalysis.data.otherCosts[index];
+    
+    if (field === 'name') {
+      otherCost.name = value;
+    } else if (field === 'percentage') {
+      otherCost.percentage = parseFloat(value) || 0;
+    }
+    
+    recalculateTotals();
+    hasChanges = true;
+  };
+
+  // Add new discount
+  const addDiscount = () => {
+    if (!editedBillData) return;
+    
+    if (!editedBillData.billAnalysis.data.billDiscounts) {
+      editedBillData.billAnalysis.data.billDiscounts = [];
+    }
+    
+    editedBillData.billAnalysis.data.billDiscounts.push({
+      name: 'New Discount',
+      value: 0
+    });
+    
+    recalculateTotals();
+    hasChanges = true;
+  };
+
+  // Add new other cost (tax)
+  const addOtherCost = () => {
+    if (!editedBillData) return;
+    
+    if (!editedBillData.billAnalysis.data.otherCosts) {
+      editedBillData.billAnalysis.data.otherCosts = [];
+    }
+    
+    editedBillData.billAnalysis.data.otherCosts.push({
+      name: 'New Tax',
+      percentage: 0,
+      price: 0,
+      calculateOnSubtotal: true // Default to calculating on subtotal
+    });
+    
+    recalculateTotals();
+    hasChanges = true;
+  };
+
+  // Remove discount
+  const removeDiscount = (index) => {
+    if (!editedBillData || !editedBillData.billAnalysis.data.billDiscounts) return;
+    
+    editedBillData.billAnalysis.data.billDiscounts.splice(index, 1);
+    recalculateTotals();
+    hasChanges = true;
+  };
+
+  // Remove other cost
+  const removeOtherCost = (index) => {
+    if (!editedBillData || !editedBillData.billAnalysis.data.otherCosts) return;
+    
+    editedBillData.billAnalysis.data.otherCosts.splice(index, 1);
+    recalculateTotals();
+    hasChanges = true;
+  };
+
   // Save changes
   const saveChanges = () => {
     billData = JSON.parse(JSON.stringify(editedBillData));
@@ -86,6 +205,17 @@
     isEditing = false;
     hasChanges = false;
     
+    // Show save feedback
+    const feedback = document.querySelector('.save-feedback');
+    if (feedback) {
+      feedback.style.opacity = '1';
+      feedback.style.transform = 'translateY(0)';
+      
+      setTimeout(() => {
+        feedback.style.opacity = '0';
+        feedback.style.transform = 'translateY(20px)';
+      }, 3000);
+    }
   };
 
   // Cancel editing
@@ -241,23 +371,101 @@
                 <span class="amount">{formatCurrency(editedBillData.billAnalysis.data.billSubtotalPrice)}</span>
               </div>
               
-              {#if editedBillData.billAnalysis.data.billDiscounts}
-                {#each editedBillData.billAnalysis.data.billDiscounts as discount}
-                  <div class="total-row discount">
-                    <span class="label">{discount.name}:</span>
-                    <span class="amount">-{formatCurrency(discount.value)}</span>
+              <!-- Discounts Section -->
+              <div class="discounts-section">
+                {#if editedBillData.billAnalysis.data.billDiscounts}
+                  {#each editedBillData.billAnalysis.data.billDiscounts as discount, index}
+                    <div class="total-row discount">
+                      {#if isEditing}
+                        <div class="discount-edit">
+                          <input 
+                            type="text" 
+                            class="discount-name-input"
+                            value={discount.name}
+                            oninput={(e) => handleDiscountEdit(index, 'name', e.target.value)}
+                            placeholder="Discount name"
+                          />
+                          <input 
+                            type="number" 
+                            class="discount-value-input"
+                            value={discount.value}
+                            oninput={(e) => handleDiscountEdit(index, 'value', e.target.value)}
+                            min="0"
+                            placeholder="0"
+                          />
+                          <button 
+                            class="remove-btn"
+                            onclick={() => removeDiscount(index)}
+                            title="Remove discount"
+                          >
+                            ×
+                          </button>
+                        </div>
+                      {:else}
+                        <span class="label">{discount.name}:</span>
+                        <span class="amount">-{formatCurrency(discount.value)}</span>
+                      {/if}
+                    </div>
+                  {/each}
+                {/if}
+                
+                {#if isEditing}
+                  <div class="add-item-row">
+                    <button class="add-btn" onclick={addDiscount}>
+                      + Add Discount
+                    </button>
                   </div>
-                {/each}
-              {/if}
+                {/if}
+              </div>
               
-              {#if editedBillData.billAnalysis.data.otherCosts}
-              {#each editedBillData.billAnalysis.data.otherCosts as otherCost}
-                <div class="total-row">
-                  <span class="label">{otherCost.name} ({otherCost.percentage}%):</span>
-                  <span class="amount">{formatCurrency(otherCost.price)}</span>
-                </div>
-              {/each}
-              {/if}
+              <!-- Other Costs Section -->
+              <div class="other-costs-section">
+                {#if editedBillData.billAnalysis.data.otherCosts}
+                  {#each editedBillData.billAnalysis.data.otherCosts as otherCost, index}
+                    <div class="total-row">
+                      {#if isEditing}
+                        <div class="other-cost-edit">
+                          <input 
+                            type="text" 
+                            class="other-cost-name-input"
+                            value={otherCost.name}
+                            oninput={(e) => handleOtherCostEdit(index, 'name', e.target.value)}
+                            placeholder="Tax/Cost name"
+                          />
+                          <input 
+                            type="number" 
+                            class="other-cost-percentage-input"
+                            value={otherCost.percentage}
+                            oninput={(e) => handleOtherCostEdit(index, 'percentage', e.target.value)}
+                            min="0"
+                            step="0.1"
+                            placeholder="0"
+                          />
+                          <span class="percentage-symbol">%</span>
+                          <button 
+                            class="remove-btn"
+                            onclick={() => removeOtherCost(index)}
+                            title="Remove tax/cost"
+                          >
+                            ×
+                          </button>
+                        </div>
+                      {:else}
+                        <span class="label">{otherCost.name} ({otherCost.percentage}%):</span>
+                      {/if}
+                      <span class="amount">{formatCurrency(otherCost.price)}</span>
+                    </div>
+                  {/each}
+                {/if}
+                
+                {#if isEditing}
+                  <div class="add-item-row">
+                    <button class="add-btn" onclick={addOtherCost}>
+                      + Add Tax/Cost
+                    </button>
+                  </div>
+                {/if}
+              </div>
               
               <div class="total-row final-total">
                 <span class="label">Total:</span>
@@ -272,7 +480,6 @@
     <!-- Save Feedback -->
     <div class="save-feedback">
       <div class="feedback-content">
-        <Icon name="Bill" />
         <span>Changes saved successfully!</span>
       </div>
     </div>
@@ -500,6 +707,8 @@
   }
 
   .price, .amount, .total-price {
+    flex: 1;
+    text-align: right;
     font-weight: $font-weight-medium;
     color: $color-gray-900;
   }
@@ -592,6 +801,147 @@
       font-size: $font-size-lg;
       font-weight: $font-weight-bold;
       color: $color-primary-dark;
+    }
+  }
+
+  // Discount editing styles
+  .discount-edit {
+    display: flex;
+    gap: $space-2;
+    align-items: center;
+    flex: 1;
+  }
+
+  .discount-name-input {
+    flex: 1;
+    background: transparent;
+    border: 2px solid $color-success;
+    border-radius: $border-radius;
+    padding: $space-1 $space-2;
+    font-size: $font-size-sm;
+    color: $color-success;
+    transition: all 0.2s ease;
+    
+    &:focus {
+      outline: none;
+      border-color: $color-accent-2-dark;
+      box-shadow: 0 0 0 3px rgba($color-success, 0.1);
+    }
+  }
+
+  .discount-value-input {
+    width: 80px;
+    text-align: right;
+    background: transparent;
+    border: 2px solid $color-success;
+    border-radius: $border-radius;
+    padding: $space-1 $space-2;
+    font-size: $font-size-sm;
+    color: $color-success;
+    transition: all 0.2s ease;
+    
+    &:focus {
+      outline: none;
+      border-color: $color-accent-2-dark;
+      box-shadow: 0 0 0 3px rgba($color-success, 0.1);
+    }
+  }
+
+  // Other cost editing styles
+  .other-cost-edit {
+    display: flex;
+    gap: $space-2;
+    align-items: center;
+    flex: 1;
+  }
+
+  .other-cost-name-input {
+    flex: 1;
+    background: transparent;
+    border: 2px solid $color-primary;
+    border-radius: $border-radius;
+    padding: $space-1 $space-2;
+    font-size: $font-size-sm;
+    color: $color-gray-900;
+    transition: all 0.2s ease;
+    
+    &:focus {
+      outline: none;
+      border-color: $color-primary-dark;
+      box-shadow: 0 0 0 3px rgba($color-primary, 0.1);
+    }
+  }
+
+  .other-cost-percentage-input {
+    text-align: right;
+    background: transparent;
+    border: 2px solid $color-primary;
+    border-radius: $border-radius;
+    padding: $space-1 $space-2;
+    font-size: $font-size-sm;
+    color: $color-gray-900;
+    transition: all 0.2s ease;
+    
+    &:focus {
+      outline: none;
+      border-color: $color-primary-dark;
+      box-shadow: 0 0 0 3px rgba($color-primary, 0.1);
+    }
+  }
+
+  .percentage-symbol {
+    color: $color-gray-600;
+    font-size: $font-size-sm;
+    font-weight: $font-weight-medium;
+  }
+
+  // Section styles
+  .discounts-section, .other-costs-section {
+    margin: $space-2 0;
+  }
+
+  // Add/Remove button styles
+  .add-item-row {
+    margin: $space-2 0;
+  }
+
+  .add-btn {
+    background: transparent;
+    border: 2px dashed $color-gray-400;
+    border-radius: $border-radius;
+    padding: $space-2 $space-3;
+    color: $color-gray-600;
+    font-size: $font-size-sm;
+    font-weight: $font-weight-medium;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    width: 100%;
+    
+    &:hover {
+      border-color: $color-primary;
+      color: $color-primary;
+      background: rgba($color-primary, 0.05);
+    }
+  }
+
+  .remove-btn {
+    background: $color-danger;
+    color: $color-white;
+    border: none;
+    border-radius: $border-radius-full;
+    width: 24px;
+    height: 24px;
+    font-size: $font-size-sm;
+    font-weight: $font-weight-bold;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s ease;
+    
+    &:hover {
+      background: darken($color-danger, 10%);
+      transform: scale(1.1);
     }
   }
 
