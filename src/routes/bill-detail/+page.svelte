@@ -5,6 +5,7 @@
   import BillSummary from '$lib/components/BillSummary.svelte';
   import SaveFeedback from '$lib/components/SaveFeedback.svelte';
   import NoBillData from '$lib/components/NoBillData.svelte';
+  import FriendsPanel from '$lib/components/FriendsPanel.svelte';
 
   // Bill data state
   let billData = $state(null);
@@ -216,6 +217,7 @@
 
 {#if billData}
   <div class="bill-detail-page">
+    <FriendsPanel />
     <!-- Header Section -->
     <BillHeader 
       {billData}
@@ -253,6 +255,7 @@
       </div>
     </div>
 
+    <div class="spacer"></div>
     <!-- Save Feedback -->
     <SaveFeedback show={showSaveFeedback} />
   </div>
@@ -263,16 +266,20 @@
 <style lang="scss">
   @use '$lib/styles/abstracts' as *;
 
+  .spacer {
+    height: 100px;
+  }
+
   .bill-detail-page {
     min-height: 100vh;
     background: $color-white;
-    padding-top: $space-16;
+    padding-top: $space-8;
   }
 
   .container {
-    max-width: 800px;
     margin: 0 auto;
     padding: 0 $space-4;
+    max-width: 1200px;
   }
 
   // Bill Content

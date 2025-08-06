@@ -2,7 +2,6 @@
   // Global styles import
   import '../app.scss';
   import { app } from '$lib/shared.svelte';
-  import Footer from '$lib/components/Footer.svelte';
   
   let { children } = $props()
 
@@ -22,5 +21,3 @@
 <main>
   {@render children()}
 </main>
-
-<Footer />

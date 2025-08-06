@@ -5,8 +5,6 @@
 </script>
 
 <div class="items-section">
-  <h2 class="section-title">Bill Items</h2>
-  
   <div class="items-list">
     {#each items as item, index}
       <BillItem 
@@ -22,17 +20,13 @@
 
 <style lang="scss">
   @use '$lib/styles/abstracts' as *;
-
-  .section-title {
-    font-size: $font-size-xl;
-    font-weight: $font-weight-bold;
-    color: $color-gray-900;
-    margin: $space-6 0;
-  }
-
   .items-list {
-    display: flex;
-    flex-direction: column;
+    display: grid;
+    grid-template-columns: 1fr;
     gap: $space-4;
+    
+    @media (min-width: $breakpoint-md) {
+      grid-template-columns: 1fr 1fr;
+    }
   }
 </style> 

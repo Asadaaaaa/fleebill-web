@@ -130,7 +130,7 @@
   @use '$lib/styles/abstracts' as *;
 
   .total-section {
-    margin-top: $space-8;
+    margin-top: $space-4;
   }
 
   .total-card {
@@ -264,7 +264,7 @@
   }
 
   .other-cost-percentage-input {
-    width: 40px;
+    width: 80px;
     text-align: right;
     background: transparent;
     border: 2px solid $color-primary;
