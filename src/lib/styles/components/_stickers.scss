@@ -1,4 +1,5 @@
 @use '../abstracts' as *;
+@use 'sass:math';
 
 .workflow-stickers {
     position: absolute;
@@ -25,7 +26,7 @@
       &.sticker-0 {
         top: 13%;
         left: 7%;
-        --random-rotation: #{random() * 45 - 22};
+        --random-rotation: #{math.random() * 45 - 22};
 
         @media (min-width: 1024px) {
           top: 10%;
@@ -36,7 +37,7 @@
       &.sticker-1 {
         bottom: -50px;
         left: 5%;
-        --random-rotation: #{random() * 55 - 27};
+        --random-rotation: #{math.random() * 55 - 27};
 
         @media (min-width: 1024px) {
           bottom: 0%;
@@ -47,7 +48,7 @@
       &.sticker-2 {
         bottom: 25%;
         left: 20%;
-        --random-rotation: #{random() * 40 - 20};
+        --random-rotation: #{math.random() * 40 - 20};
 
         @media (min-width: 1024px) {
           bottom: 31%;
@@ -58,7 +59,7 @@
       &.sticker-3 {
         bottom: 1%;
         right: 15%;
-        --random-rotation: #{random() * 50 - 25};
+        --random-rotation: #{math.random() * 50 - 25};
 
         @media (min-width: 1024px) {
           bottom: 10%;
@@ -69,7 +70,7 @@
       &.sticker-4 {
         top: 23%;
         right: 20%;
-        --random-rotation: #{random() * 35 - 17};
+        --random-rotation: #{math.random() * 35 - 17};
 
         @media (min-width: 1024px) {
           top: 15%;
@@ -80,7 +81,7 @@
       &.sticker-5 {
         top: 9%;
         right: -100px;
-        --random-rotation: #{random() * 60 - 30};
+        --random-rotation: #{math.random() * 60 - 30};
 
         @media (min-width: 1024px) {
           top: 17%;
@@ -91,7 +92,7 @@
       &.sticker-6 {
         bottom: 10%;
         right: -100%;
-        --random-rotation: #{random() * 42 - 21};
+        --random-rotation: #{math.random() * 42 - 21};
 
         @media (min-width: 1024px) {
           bottom: 35%;
@@ -114,7 +115,7 @@
       &.sticker-0 {
         top: 13%;
         left: 7%;
-        --random-rotation: #{random() * 45 - 22};
+        --random-rotation: #{math.random() * 45 - 22};
 
         @media (min-width: 1024px) {
           top: 10%;
@@ -125,7 +126,7 @@
       &.sticker-1 {
         bottom: -50px;
         left: 5%;
-        --random-rotation: #{random() * 55 - 27};
+        --random-rotation: #{math.random() * 55 - 27};
 
         @media (min-width: 1024px) {
           bottom: 0%;
@@ -136,7 +137,7 @@
       &.sticker-2 {
         bottom: 25%;
         left: 20%;
-        --random-rotation: #{random() * 40 - 20};
+        --random-rotation: #{math.random() * 40 - 20};
 
         @media (min-width: 1024px) {
           bottom: 31%;
@@ -147,7 +148,7 @@
       &.sticker-3 {
         bottom: 1%;
         right: 15%;
-        --random-rotation: #{random() * 50 - 25};
+        --random-rotation: #{math.random() * 50 - 25};
 
         @media (min-width: 1024px) {
           bottom: 10%;
@@ -158,7 +159,7 @@
       &.sticker-4 {
         top: 23%;
         right: 20%;
-        --random-rotation: #{random() * 35 - 17};
+        --random-rotation: #{math.random() * 35 - 17};
 
         @media (min-width: 1024px) {
           top: 15%;
@@ -169,7 +170,7 @@
       &.sticker-5 {
         top: 9%;
         right: -100px;
-        --random-rotation: #{random() * 60 - 30};
+        --random-rotation: #{math.random() * 60 - 30};
 
         @media (min-width: 1024px) {
           top: 17%;
@@ -180,7 +181,7 @@
       &.sticker-6 {
         bottom: 10%;
         right: -100%;
-        --random-rotation: #{random() * 42 - 21};
+        --random-rotation: #{math.random() * 42 - 21};
 
         @media (min-width: 1024px) {
           bottom: 35%;
@@ -202,7 +203,7 @@
       &.sticker-0 {
         top: 13%;
         left: 7%;
-        --random-rotation: #{random() * 45 - 22};
+        --random-rotation: #{math.random() * 45 - 22};
 
         @media (min-width: 1024px) {
           top: 10%;
@@ -213,7 +214,7 @@
       &.sticker-1 {
         bottom: -50px;
         left: 5%;
-        --random-rotation: #{random() * 55 - 27};
+        --random-rotation: #{math.random() * 55 - 27};
 
         @media (min-width: 1024px) {
           bottom: 0%;
@@ -224,7 +225,7 @@
       &.sticker-2 {
         bottom: 25%;
         left: 20%;
-        --random-rotation: #{random() * 40 - 20};
+        --random-rotation: #{math.random() * 40 - 20};
 
         @media (min-width: 1024px) {
           bottom: 31%;
@@ -235,7 +236,7 @@
       &.sticker-3 {
         bottom: 1%;
         right: 15%;
-        --random-rotation: #{random() * 50 - 25};
+        --random-rotation: #{math.random() * 50 - 25};
 
         @media (min-width: 1024px) {
           bottom: 10%;
@@ -246,7 +247,7 @@
       &.sticker-4 {
         top: 23%;
         right: 20%;
-        --random-rotation: #{random() * 35 - 17};
+        --random-rotation: #{math.random() * 35 - 17};
 
         @media (min-width: 1024px) {
           top: 15%;
@@ -257,7 +258,7 @@
       &.sticker-5 {
         top: 9%;
         right: -100px;
-        --random-rotation: #{random() * 60 - 30};
+        --random-rotation: #{math.random() * 60 - 30};
 
         @media (min-width: 1024px) {
           top: 17%;
@@ -268,7 +269,7 @@
       &.sticker-6 {
         bottom: 10%;
         right: -100%;
-        --random-rotation: #{random() * 42 - 21};
+        --random-rotation: #{math.random() * 42 - 21};
 
         @media (min-width: 1024px) {
           bottom: 35%;
