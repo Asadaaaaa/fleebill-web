@@ -1,9 +1,5 @@
 <script>
-  export let item;
-  export let index;
-  export let isEditing;
-  export let onItemEdit;
-  export let formatCurrency;
+  let { item, index, isEditing, onItemEdit, formatCurrency } = $props();
 
   const handleInputChange = (field, value) => {
     onItemEdit(index, field, value);
@@ -81,7 +77,7 @@
   @use '$lib/styles/abstracts' as *;
 
   .item-card {
-    background: $color-white;
+    background: white;
     border-radius: $border-radius-lg;
     padding: $space-6;
     box-shadow: $box-shadow;
@@ -112,7 +108,7 @@
 
   .item-type {
     background: $color-secondary;
-    color: $color-gray-800;
+    color: $color-gray-900;
     font-weight: $font-weight-medium;
     padding: $space-1 $space-3;
     border-radius: $border-radius-full;

@@ -1,14 +1,6 @@
 <script>
-  export let billData;
-  export let isEditing;
-  export let onDiscountEdit;
-  export let onOtherCostEdit;
-  export let onAddDiscount;
-  export let onAddOtherCost;
-  export let onRemoveDiscount;
-  export let onRemoveOtherCost;
-  export let formatCurrency;
 
+  let { billData, isEditing, onDiscountEdit, onOtherCostEdit, onAddDiscount, onAddOtherCost, onRemoveDiscount, onRemoveOtherCost, formatCurrency } = $props();
   const handleDiscountInput = (index, field, value) => {
     onDiscountEdit(index, field, value);
   };
@@ -27,7 +19,7 @@
     <div class="total-breakdown">
       <div class="total-row">
         <span class="label">Subtotal:</span>
-        <span class="amount">{formatCurrency(billData.billAnalysis.data.billSubtotalPrice)}</span>
+        <span class="amount">{formatCurrency(billData.billAnalysis.data.billSubtotalPrice ?? billData.billAnalysis.data.billTotalPrice)}</span>
       </div>
       
       <!-- Discounts Section -->
@@ -142,7 +134,7 @@
   }
 
   .total-card {
-    background: $color-white;
+    background: white;
     border-radius: $border-radius-lg;
     padding: $space-6;
     box-shadow: $box-shadow-md;

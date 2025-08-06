@@ -1,10 +1,7 @@
 <script>
   import BillItem from './BillItem.svelte';
 
-  export let items;
-  export let isEditing;
-  export let onItemEdit;
-  export let formatCurrency;
+  let { items, isEditing, onItemEdit, formatCurrency } = $props();
 </script>
 
 <div class="items-section">
@@ -26,15 +23,11 @@
 <style lang="scss">
   @use '$lib/styles/abstracts' as *;
 
-  .items-section {
-    margin-bottom: $space-8;
-  }
-
   .section-title {
     font-size: $font-size-xl;
     font-weight: $font-weight-bold;
     color: $color-gray-900;
-    margin: 0 0 $space-6 0;
+    margin: $space-6 0;
   }
 
   .items-list {

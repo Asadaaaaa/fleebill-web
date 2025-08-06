@@ -265,7 +265,8 @@
 
   .bill-detail-page {
     min-height: 100vh;
-    background: linear-gradient(135deg, $color-gray-100 0%, $color-white 100%);
+    background: $color-white;
+    padding-top: $space-16;
   }
 
   .container {
