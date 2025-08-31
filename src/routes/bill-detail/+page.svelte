@@ -242,12 +242,14 @@
   const calculateBillBreakdown = (data) => {
     // Step 1: Calculate Subtotals
     const friendSubtotals = {};
+    const friendIds = {};
     
     // Initialize subtotals for all friends
     data.items.forEach(item => {
-      item.friends.forEach(friendName => {
+      item.friends.forEach((friendName, index) => {
         if (!friendSubtotals[friendName]) {
           friendSubtotals[friendName] = 0;
+          friendIds[friendName] = item.friendIds[index];
         }
       });
     });
@@ -299,6 +301,7 @@
       const totalOwed = Math.round(netRatio * netAmount);
       
       friendBills.push({
+        id: friendIds[friendName],
         name: friendName,
         itemSubtotal,
         shareOfCosts,
@@ -322,6 +325,7 @@
     const totalOwed = netAmount - distributedTotal;
     
     friendBills.push({
+      id: friendIds[lastFriendName],
       name: lastFriendName,
       itemSubtotal: lastItemSubtotal,
       shareOfCosts,
@@ -353,7 +357,8 @@
  
         return {
           ...item,
-          friends: friendsWithThisItem.map(friend => friend.name)
+          friends: friendsWithThisItem.map(friend => friend.name),
+          friendIds: friendsWithThisItem.map(friend => friend.id)
         };
       });
       finalBillData = {data: { ...editedBillData.billAnalysis.data, items: finalItems }};

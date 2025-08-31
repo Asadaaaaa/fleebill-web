@@ -21,28 +21,10 @@
   // Calculate total
   $: totalAmount = breakdownData.reduce((sum, friend) => sum + friend.totalOwed, 0);
 
-  // Get friend avatar color based on name
-  const getAvatarColor = (name) => {
-    const colors = [
-      '#E5B0A9', // primary
-      '#92D8D8', // secondary
-      '#FBE480', // tertiary
-      '#B298DC', // accent-1
-      '#86C28B', // accent-2
-      '#F18D8D', // danger
-    ];
-    const index = name.charCodeAt(0) % colors.length;
-    return colors[index];
-  };
-
-  // Get initials from name
-  const getInitials = (name) => {
-    return name.split(' ').map(word => word[0]).join('').toUpperCase();
-  };
-
   // Go back to bill detail
   const goBack = () => {
     goto('/bill-detail');
+    // console.log(breakdownData);
   };
 
   // Share breakdown
@@ -143,8 +125,9 @@
           {#each breakdownData as friend, index}
             <div class="friend-card" style="--delay: {index * 0.1}s">
               <div class="friend-header">
-                <div class="friend-avatar" style="background-color: {getAvatarColor(friend.name)}">
-                  <span class="avatar-text">{getInitials(friend.name)}</span>
+                <div class="friend-avatar" 
+                  style="background-image: url('/images/placeholder/placeholder_{friend.id}.webp'); background-size: cover; background-position: center;"
+                >
                 </div>
                 <div class="friend-info">
                   <h4 class="friend-name">{friend.name}</h4>
