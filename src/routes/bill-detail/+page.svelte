@@ -7,7 +7,8 @@
   import NoBillData from '$lib/components/NoBillData.svelte';
   import FriendsPanel from '$lib/components/FriendsPanel.svelte';
   import AppButton from '$lib/components/AppButton.svelte';
-
+  import { bill } from '$lib/shared.svelte';
+  import ErrorHandler from '$lib/components/ErrorHandler.svelte';
   // Bill data state
   let billData = $state(null);
   let editedBillData = $state(null);
@@ -15,6 +16,7 @@
   let hasChanges = $state(false);
   let showSaveFeedback = $state(false);
 
+  let error = $state(null);
   // Format currency
   const formatCurrency = (amount) => {
     return new Intl.NumberFormat('id-ID', {
@@ -214,6 +216,36 @@
       cancelEditing();
     }
   };
+
+  const validateBill = () => {
+    if(editedBillData.billAnalysis.data.items.length === 0) {
+      error = 'Please add at least one item';
+      return false;
+    }
+    
+    // Check if every item is assigned to at least one friend
+    const allItemsAssigned = editedBillData.billAnalysis.data.items.every((item, itemIndex) => {
+      // Check if this item index exists in any friend's items array
+      return bill.friends.some(friend => 
+        friend.items.some(friendItem => friendItem.itemIndex === itemIndex)
+      );
+    });
+    
+    if(!allItemsAssigned) {
+      error = 'Please assign all items to at least one friend';
+      return false;
+    }
+    
+    return allItemsAssigned;
+  };
+
+  const splitBill = () => {
+    if(validateBill()) {
+      console.log('Bill is valid');
+    } else {
+      console.log('Bill is invalid');
+    }
+  };
 </script>
 
 {#if billData}
@@ -256,7 +288,7 @@
       </div>
         
       <div class="split-bill-button">
-        <AppButton>
+        <AppButton onclick={splitBill}>
           <h1>Split</h1>
         </AppButton>
       </div>
@@ -265,6 +297,7 @@
     <div class="spacer"></div>
     <!-- Save Feedback -->
     <SaveFeedback show={showSaveFeedback} />
+    <ErrorHandler error={error} onRetry={splitBill} onClose={() => error = null} />
   </div>
 {:else}
   <NoBillData />
