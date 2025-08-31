@@ -16,6 +16,7 @@
   let showSaveFeedback = $state(false);
   let showErrorFeedback = $state(false);
   let error = $state(null);
+  let finalBillData = $state(null);
   // Format currency
   const formatCurrency = (amount) => {
     return new Intl.NumberFormat('id-ID', {
@@ -240,7 +241,8 @@
 
   const splitBill = () => {
     if(validateBill()) {
-      console.log('Bill is valid');
+      finalBillData = {data: editedBillData.billAnalysis.data, friends: bill.friends};
+      console.log(finalBillData)
     } else {
       console.log('Bill is invalid');
       showErrorFeedback = true;
