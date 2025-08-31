@@ -1,11 +1,14 @@
 <script>
   import FriendAvatar from "./FriendAvatar.svelte";
   import { bill } from "$lib/shared.svelte";
+  import FeedBack from "./FeedBack.svelte";
 
   let newFriendName = $state("");
   let isAddingFriend = $state(false);
   let showModal = $state(false);
   let internalFriends = $state([]);
+  let showErrorFeedback = $state(false);
+  let error = $state(null);
   let onFriendsChange;  
 
   // Initialize with "Me" if friends array is empty
@@ -47,6 +50,15 @@
   };
 
   const addFriend = () => {
+    if (internalFriends.find(friend => friend.name === newFriendName.trim())) {
+      showErrorFeedback = true;
+      error = 'Friend already exists';
+      setTimeout(() => {
+        showErrorFeedback = false;
+        error = null;
+      }, 3000);
+      return;
+    }
     if (newFriendName.trim()) {
       const newFriend = {
         id: 897 + internalFriends.length,
@@ -108,6 +120,7 @@
       </div>
     {/each}
   </div>
+  <FeedBack show={showErrorFeedback} type={'error'} message={error} />
 </div>
 
 {#if showModal}

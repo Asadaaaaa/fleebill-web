@@ -275,6 +275,9 @@
     const totalOtherCosts = data.otherCosts.reduce((sum, cost) => sum + cost.price, 0);
     const totalDiscounts = data.billDiscounts ? data.billDiscounts.reduce((sum, discount) => sum + discount.value, 0) : 0;
     
+    // The billTotalPrice is already the final amount after all calculations
+    const netAmount = data.billTotalPrice;
+    
     // Step 3: Distribute costs and discounts proportionally with proper rounding
     const friendNames = Object.keys(friendSubtotals);
     const friendBills = [];
@@ -290,7 +293,10 @@
       
       const shareOfCosts = Math.round(costRatio * totalOtherCosts);
       const shareOfDiscounts = Math.round(discountRatio * totalDiscounts);
-      const totalOwed = itemSubtotal + shareOfCosts - shareOfDiscounts;
+      
+      // Calculate total owed based on net amount proportion
+      const netRatio = itemSubtotal / totalSubtotal;
+      const totalOwed = Math.round(netRatio * netAmount);
       
       friendBills.push({
         name: friendName,
@@ -310,7 +316,10 @@
     
     const shareOfCosts = totalOtherCosts - distributedCosts;
     const shareOfDiscounts = totalDiscounts - distributedDiscounts;
-    const totalOwed = lastItemSubtotal + shareOfCosts - shareOfDiscounts;
+    
+    // Last friend gets the remainder to ensure perfect sum
+    const distributedTotal = friendBills.reduce((sum, bill) => sum + bill.totalOwed, 0);
+    const totalOwed = netAmount - distributedTotal;
     
     friendBills.push({
       name: lastFriendName,
@@ -324,6 +333,7 @@
     const calculatedTotal = friendBills.reduce((sum, bill) => sum + bill.totalOwed, 0);
     if (calculatedTotal !== data.billTotalPrice) {
       console.warn(`Total mismatch: calculated ${calculatedTotal}, expected ${data.billTotalPrice}`);
+      console.warn(`Net amount: ${netAmount}, Total subtotal: ${totalSubtotal}, Total costs: ${totalOtherCosts}, Total discounts: ${totalDiscounts}`);
     }
     
     return friendBills;
@@ -347,7 +357,7 @@
         };
       });
       finalBillData = {data: { ...editedBillData.billAnalysis.data, items: finalItems }};
-      
+      console.log('Final Bill Data:', finalBillData);
       // Calculate bill breakdown
       const breakdown = calculateBillBreakdown(finalBillData.data);
       console.log('Bill Breakdown:', breakdown);
