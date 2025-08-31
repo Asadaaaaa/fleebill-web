@@ -1,6 +1,7 @@
 <script>
   import FriendAvatar from "./FriendAvatar.svelte";
   import { bill, app } from "$lib/shared.svelte";
+  import { onMount } from "svelte";
 
   let { item, index, isEditing, onItemEdit, formatCurrency } = $props();
 
@@ -72,7 +73,7 @@
     <div class="item-friends-label">Select Friend(s) for this item</div>
     <div class="item-friends-list">
       {#each bill.friends as friend}
-        <FriendAvatar id={friend.id} />
+        <FriendAvatar id={friend.id} {item} itemIndex={index}/>
       {/each}
     </div>
   </div>

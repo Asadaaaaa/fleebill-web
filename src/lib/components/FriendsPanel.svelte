@@ -14,6 +14,7 @@
       const meUser = {
         id: 897,
         name: "Me",
+        items: [],
       };
       internalFriends = [meUser];
       onFriendsChange?.(internalFriends);
@@ -50,6 +51,7 @@
       const newFriend = {
         id: 897 + internalFriends.length,
         name: newFriendName.trim(),
+        items: [],
       };
 
       internalFriends = [...internalFriends, newFriend];
