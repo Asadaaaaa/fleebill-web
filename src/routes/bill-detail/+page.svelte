@@ -351,6 +351,14 @@
       // Calculate bill breakdown
       const breakdown = calculateBillBreakdown(finalBillData.data);
       console.log('Bill Breakdown:', breakdown);
+      
+      // Store data and navigate to breakdown page
+      localStorage.setItem('billBreakdown', JSON.stringify(breakdown));
+      localStorage.setItem('finalBillData', JSON.stringify(finalBillData));
+      
+      // Navigate to breakdown page
+      const breakdownParam = encodeURIComponent(JSON.stringify(breakdown));
+      window.location.href = `/bill-breakdown?breakdown=${breakdownParam}`;
     } else {
       console.log('Bill is invalid:', error);
       showErrorFeedback = true;
