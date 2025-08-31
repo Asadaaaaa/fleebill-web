@@ -8,14 +8,13 @@
   import FriendsPanel from '$lib/components/FriendsPanel.svelte';
   import AppButton from '$lib/components/AppButton.svelte';
   import { bill } from '$lib/shared.svelte';
-  import ErrorHandler from '$lib/components/ErrorHandler.svelte';
   // Bill data state
   let billData = $state(null);
   let editedBillData = $state(null);
   let isEditing = $state(false);
   let hasChanges = $state(false);
   let showSaveFeedback = $state(false);
-
+  let showErrorFeedback = $state(false);
   let error = $state(null);
   // Format currency
   const formatCurrency = (amount) => {
@@ -244,6 +243,11 @@
       console.log('Bill is valid');
     } else {
       console.log('Bill is invalid');
+      showErrorFeedback = true;
+      setTimeout(() => {
+        showErrorFeedback = false;
+        error = null;
+      }, 3000);
     }
   };
 </script>
@@ -296,8 +300,8 @@
 
     <div class="spacer"></div>
     <!-- Save Feedback -->
-    <SaveFeedback show={showSaveFeedback} />
-    <ErrorHandler error={error} onRetry={splitBill} onClose={() => error = null} />
+    <SaveFeedback show={showSaveFeedback} type={'success'} message={'Changes saved successfully!'} />
+    <SaveFeedback show={showErrorFeedback} type={'error'} message={error} />
   </div>
 {:else}
   <NoBillData />

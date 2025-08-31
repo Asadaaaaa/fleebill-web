@@ -1,11 +1,19 @@
 <script>
   export let show = false;
+  export let type = 'success'; // 'success' or 'error'
+  export let message = 'Changes saved successfully!'; // 'success' or 'error'
 </script>
 
 {#if show}
-  <div class="save-feedback">
+  <div class="save-feedback {type}">
     <div class="feedback-content">
-      <span>Changes saved successfully!</span>
+      <span>
+        {#if type === 'success'}
+          {message}
+        {:else if type === 'error'}
+          {message}
+        {/if}
+      </span>
     </div>
   </div>
 {/if}
@@ -17,7 +25,6 @@
     position: fixed;
     bottom: $space-6;
     right: $space-6;
-    background: $color-success;
     color: $color-white;
     padding: $space-3 $space-4;
     border-radius: $border-radius-lg;
@@ -27,6 +34,14 @@
     transition: all 0.3s ease;
     z-index: $z-index-modal;
     animation: slideIn 0.3s ease forwards;
+
+    &.success {
+      background: $color-success;
+    }
+
+    &.error {
+      background: $color-danger;
+    }
   }
 
   .feedback-content {
