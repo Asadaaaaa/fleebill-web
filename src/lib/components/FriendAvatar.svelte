@@ -20,9 +20,9 @@
   };
 
   let isSelected = $derived(
-    bill.friends.some((friend) =>
-      friend.items.some((item) => item.itemIndex === itemIndex)
-    )
+    bill.friends.find(friend => friend.id === id)?.items.some(
+      item => item.itemIndex === itemIndex
+    ) || false
   );
 </script>
 
