@@ -3,7 +3,7 @@
   import BillHeader from '$lib/components/BillHeader.svelte';
   import BillItemsList from '$lib/components/BillItemsList.svelte';
   import BillSummary from '$lib/components/BillSummary.svelte';
-  import SaveFeedback from '$lib/components/SaveFeedback.svelte';
+  import FeedBack from '$lib/components/FeedBack.svelte';
   import NoBillData from '$lib/components/NoBillData.svelte';
   import FriendsPanel from '$lib/components/FriendsPanel.svelte';
   import AppButton from '$lib/components/AppButton.svelte';
@@ -300,8 +300,8 @@
 
     <div class="spacer"></div>
     <!-- Save Feedback -->
-    <SaveFeedback show={showSaveFeedback} type={'success'} message={'Changes saved successfully!'} />
-    <SaveFeedback show={showErrorFeedback} type={'error'} message={error} />
+    <FeedBack show={showSaveFeedback} type={'success'} message={'Changes saved successfully!'} />
+    <FeedBack show={showErrorFeedback} type={'error'} message={error} />
   </div>
 {:else}
   <NoBillData />
