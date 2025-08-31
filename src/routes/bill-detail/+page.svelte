@@ -239,12 +239,120 @@
     return allItemsAssigned;
   };
 
+  const calculateBillBreakdown = (data) => {
+    // Step 1: Calculate Subtotals
+    const friendSubtotals = {};
+    
+    // Initialize subtotals for all friends
+    data.items.forEach(item => {
+      item.friends.forEach(friendName => {
+        if (!friendSubtotals[friendName]) {
+          friendSubtotals[friendName] = 0;
+        }
+      });
+    });
+    
+    // Calculate item subtotals for each friend
+    data.items.forEach(item => {
+      const costPerPerson = Math.round(item.totalPrice / item.friends.length);
+      let distributedCost = 0;
+      
+      // Distribute cost to all friends except the last one
+      for (let i = 0; i < item.friends.length - 1; i++) {
+        const friendName = item.friends[i];
+        friendSubtotals[friendName] += costPerPerson;
+        distributedCost += costPerPerson;
+      }
+      
+      // Last friend gets the remainder to ensure perfect sum
+      const lastFriendName = item.friends[item.friends.length - 1];
+      const remainder = item.totalPrice - distributedCost;
+      friendSubtotals[lastFriendName] += remainder;
+    });
+    
+    // Step 2: Calculate totals
+    const totalSubtotal = Object.values(friendSubtotals).reduce((sum, subtotal) => sum + subtotal, 0);
+    const totalOtherCosts = data.otherCosts.reduce((sum, cost) => sum + cost.price, 0);
+    const totalDiscounts = data.billDiscounts ? data.billDiscounts.reduce((sum, discount) => sum + discount.value, 0) : 0;
+    
+    // Step 3: Distribute costs and discounts proportionally with proper rounding
+    const friendNames = Object.keys(friendSubtotals);
+    const friendBills = [];
+    
+    // First pass: calculate shares for all except the last friend
+    for (let i = 0; i < friendNames.length - 1; i++) {
+      const friendName = friendNames[i];
+      const itemSubtotal = friendSubtotals[friendName];
+      
+      // Calculate proportional shares
+      const costRatio = itemSubtotal / totalSubtotal;
+      const discountRatio = itemSubtotal / totalSubtotal;
+      
+      const shareOfCosts = Math.round(costRatio * totalOtherCosts);
+      const shareOfDiscounts = Math.round(discountRatio * totalDiscounts);
+      const totalOwed = itemSubtotal + shareOfCosts - shareOfDiscounts;
+      
+      friendBills.push({
+        name: friendName,
+        itemSubtotal,
+        shareOfCosts,
+        shareOfDiscounts,
+        totalOwed
+      });
+    }
+    
+    // Second pass: handle the last friend with remainder method
+    const lastFriendName = friendNames[friendNames.length - 1];
+    const lastItemSubtotal = friendSubtotals[lastFriendName];
+    
+    const distributedCosts = friendBills.reduce((sum, bill) => sum + bill.shareOfCosts, 0);
+    const distributedDiscounts = friendBills.reduce((sum, bill) => sum + bill.shareOfDiscounts, 0);
+    
+    const shareOfCosts = totalOtherCosts - distributedCosts;
+    const shareOfDiscounts = totalDiscounts - distributedDiscounts;
+    const totalOwed = lastItemSubtotal + shareOfCosts - shareOfDiscounts;
+    
+    friendBills.push({
+      name: lastFriendName,
+      itemSubtotal: lastItemSubtotal,
+      shareOfCosts,
+      shareOfDiscounts,
+      totalOwed
+    });
+    
+    // Step 4: Final sanity check
+    const calculatedTotal = friendBills.reduce((sum, bill) => sum + bill.totalOwed, 0);
+    if (calculatedTotal !== data.billTotalPrice) {
+      console.warn(`Total mismatch: calculated ${calculatedTotal}, expected ${data.billTotalPrice}`);
+    }
+    
+    return friendBills;
+  };
+
   const splitBill = () => {
+    console.log('Validating bill...');
+    console.log('Items:', editedBillData.billAnalysis.data.items);
+    console.log('Friends:', bill.friends);
+    
     if(validateBill()) {
-      finalBillData = {data: editedBillData.billAnalysis.data, friends: bill.friends};
-      console.log(finalBillData)
+      let finalItems = editedBillData.billAnalysis.data.items.map((item, itemIndex) => {
+        // Find all friends who have this item
+        const friendsWithThisItem = bill.friends.filter(friend => 
+          friend.items.some(friendItem => friendItem.itemIndex === itemIndex)
+        );
+ 
+        return {
+          ...item,
+          friends: friendsWithThisItem.map(friend => friend.name)
+        };
+      });
+      finalBillData = {data: { ...editedBillData.billAnalysis.data, items: finalItems }};
+      
+      // Calculate bill breakdown
+      const breakdown = calculateBillBreakdown(finalBillData.data);
+      console.log('Bill Breakdown:', breakdown);
     } else {
-      console.log('Bill is invalid');
+      console.log('Bill is invalid:', error);
       showErrorFeedback = true;
       setTimeout(() => {
         showErrorFeedback = false;
